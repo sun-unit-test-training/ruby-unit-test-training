@@ -1,0 +1,4 @@
+excercise_1:
+  price_per_cup: 490 # yen
+  discount_per_cup: 290 # yen
+  price_with_voucher: 100 # yen

@@ -1,0 +1,13 @@
+h3 Exercise 1
+= form_tag :exercise1_index, method: :get do
+  = label_tag :number_of_cup, 'Number of cup'
+  = number_field_tag :number_of_cup
+  br
+  = check_box_tag :have_voucher
+  = label_tag :have_voucher, 'Have voucher'
+  br
+  = submit_tag :submit
+br
+p = "Total: #{@total_price} ¥"
+
+= render 'layouts/thread', thread: :exercise_1
