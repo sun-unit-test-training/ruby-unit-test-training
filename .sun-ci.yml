@@ -19,6 +19,14 @@ jobs:
         paths:
           - node_modules
 
+  - name: rubocop
+    stage: test
+    image: framgiaciteam/ruby:2.7.1
+    before_script:
+      - bundle _2.1.4_ install --path vendor/bundle
+    script:
+      - bundle _2.1.4_ exec rubocop
+
   - name: rspec
     stage: test
     image: framgiaciteam/ruby:2.7.1

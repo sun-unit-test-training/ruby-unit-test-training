@@ -35,7 +35,7 @@ class Exercise1::CalculateService
   end
 
   def validate_time(time)
-    return time.to_time if time.to_s.match?(@validations.time)
+    return Time.zone.parse(time) if time.to_s.match?(@validations.time)
 
     @errors.merge!(time: :invalid)
     raise ArgumentError

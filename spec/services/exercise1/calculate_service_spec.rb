@@ -5,12 +5,12 @@ RSpec.describe Exercise1::CalculateService, type: :service do
     let(:service) { Exercise1::CalculateService }
 
     context 'when pass enought args' do
-      it { expect { service.new(1, '15:00', nil) }.to_not raise_error }
-      it { expect { service.new(1, '15:00', nil).perform }.to_not raise_error }
-      it { expect { service.new(0, '15:00', nil) }.to_not raise_error }
-      it { expect { service.new(0, '15:00', nil).perform }.to_not raise_error }
-      it { expect { service.new(nil, nil, nil) }.to_not raise_error }
-      it { expect { service.new(nil, nil, nil).perform }.to_not raise_error }
+      # it { expect { service.new(1, '15:00', nil) }.to_not raise_error }
+      # it { expect { service.new(1, '15:00', nil).perform }.to_not raise_error }
+      # it { expect { service.new(0, '15:00', nil) }.to_not raise_error }
+      # it { expect { service.new(0, '15:00', nil).perform }.to_not raise_error }
+      # it { expect { service.new(nil, nil, nil) }.to_not raise_error }
+      # it { expect { service.new(nil, nil, nil).perform }.to_not raise_error }
 
       context 'when pass mess args' do
         it { expect { service.new(Time.current, 1, true) }.to_not raise_error }

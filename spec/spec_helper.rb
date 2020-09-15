@@ -16,8 +16,14 @@
 
 # simple cov
 require "simplecov"
+
 SimpleCov.start "rails" do
   enable_coverage :branch
+  minimum_coverage 100
+end
+
+SimpleCov.at_exit do
+  SimpleCov.result.format!
 end
 
 RSpec.configure do |config|
