@@ -1,6 +1,6 @@
 class Exercise1Controller < ApplicationController
   def index
-    @total_price = if number_of_cup > 0
+    @total_price = if number_of_cup.positive?
       (number_of_cup - 1) * price_at_time + price_of_first_cup
     else
       0
@@ -17,17 +17,17 @@ class Exercise1Controller < ApplicationController
   end
 
   def number_of_cup
-    params[:number_of_cup].to_i > 0 ? params[:number_of_cup].to_i : 0
+    params[:number_of_cup]&.match?(/\A\d*\z/) ? params[:number_of_cup].to_i : 0
   end
 
   def price_at_time
     @price_at_time ||=
-      time.between?(*discount_time) ? Settings.excercise_1.discount_per_cup : Settings.excercise_1.price_per_cup
+      time.between?(*discount_time) ? Settings.exercise_1.price_within_discount_time : Settings.exercise_1.price_per_cup
   end
 
   def price_of_first_cup
     @price_of_first_cup ||=
-      params[:have_voucher] == '1' ? Settings.excercise_1.price_with_voucher : price_at_time
+      params[:have_voucher] == '1' ? Settings.exercise_1.price_with_voucher : price_at_time
   end
 
   def time

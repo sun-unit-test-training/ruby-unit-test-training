@@ -9,7 +9,10 @@ html
     = javascript_pack_tag 'application'
   body
     .row
-      .col-md-3
+      .col-md-3.border-right
         = render 'layouts/sidebar'
-      .col-md-9
-        = yield
+      .col-md-8
+        h3.text-center.py-3 = yield(:title)
+        .ml-5
+          = yield
+        = render 'layouts/thread'
