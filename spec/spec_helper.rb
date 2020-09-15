@@ -16,7 +16,9 @@
 
 # simple cov
 require "simplecov"
-SimpleCov.start "rails"
+SimpleCov.start "rails" do
+  enable_coverage :branch
+end
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
