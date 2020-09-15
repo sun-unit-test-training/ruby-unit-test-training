@@ -6,6 +6,9 @@ h3 Exercise 1
   = check_box_tag :have_voucher
   = label_tag :have_voucher, 'Have voucher'
   br
+  = label_tag :time, 'Time'
+  = datetime_field_tag :time, Time.current.strftime('%Y-%m-%dT%H:%M')
+  br
   = submit_tag :submit
 br
 p = "Total: #{@total_price} ¥"
