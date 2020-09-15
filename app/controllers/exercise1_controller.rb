@@ -9,6 +9,26 @@ class Exercise1Controller < ApplicationController
 
   private
 
+  def number_of_cup
+    @number_of_cup ||=
+      params[:number_of_cup]&.match?(validations.number) ? params[:number_of_cup].to_i : 0
+  end
+
+  def price_at_time
+    @price_at_time ||=
+      time.between?(*discount_time) ? settings.price_within_discount_time : settings.price_per_cup
+  end
+
+  def price_of_first_cup
+    @price_of_first_cup ||=
+      params[:have_voucher] == '1' ? settings.price_with_voucher : price_at_time
+  end
+
+  def time
+    @time ||=
+      params[:time].match?(validations.time) ? params[:time].to_time : Time.current
+  end
+
   def discount_time
     [
       Time.current.change(hour: 16, min: 0, sec: 0),
@@ -16,21 +36,7 @@ class Exercise1Controller < ApplicationController
     ]
   end
 
-  def number_of_cup
-    params[:number_of_cup]&.match?(/\A\d*\z/) ? params[:number_of_cup].to_i : 0
-  end
-
-  def price_at_time
-    @price_at_time ||=
-      time.between?(*discount_time) ? Settings.exercise_1.price_within_discount_time : Settings.exercise_1.price_per_cup
-  end
-
-  def price_of_first_cup
-    @price_of_first_cup ||=
-      params[:have_voucher] == '1' ? Settings.exercise_1.price_with_voucher : price_at_time
-  end
-
-  def time
-    params[:time] ? params[:time].to_time : Time.current
+  def settings
+    Settings.exercise_1
   end
 end
