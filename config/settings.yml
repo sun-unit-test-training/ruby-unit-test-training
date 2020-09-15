@@ -1,3 +1,7 @@
+validations:
+  number: !ruby/regexp /\A\d*\z/
+  time: !ruby/regexp /\A(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]\z/
+
 exercise_1:
   price_per_cup: 490 # yen
   price_within_discount_time: 290 # yen
