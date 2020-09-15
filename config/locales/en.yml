@@ -28,3 +28,8 @@ en:
       voucher: 'Have voucher'
       submit: 'Submit'
       total: 'Total: %{price}'
+      errors:
+        number_of_cup:
+          invalid: You need to input integer
+        time:
+          invalid: Time is invalid

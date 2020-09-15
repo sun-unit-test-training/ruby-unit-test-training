@@ -7,17 +7,21 @@
       .col-md-3
         = label_tag :number_of_cup, t('.number_of_cup'), class: 'float-right'
       .col-md-9
-        = number_field_tag :number_of_cup, nil, class: 'form-control', min: 0
+        = number_field_tag :number_of_cup, params[:number_of_cup], class: 'form-control', min: 0
+        - if @errors[:number_of_cup]
+          p.text-danger = t(".errors.number_of_cup.#{@errors[:number_of_cup]}")
   .form-group.my-2
     .row
       .col-md-3
         = label_tag :time, t('.time'), class: 'float-right'
       .col-md-9
-        = time_field_tag :time, Time.current.strftime('%H:%M'), class: 'form-control'
+        = time_field_tag :time, params[:time] || Time.current.strftime('%H:%M'), class: 'form-control'
+        - if @errors[:time]
+          p.text-danger = t(".errors.time.#{@errors[:time]}")
   .form-group.my-2
     .row
       .col-md-3
-        = check_box_tag :have_voucher, 1, false, class: 'form-check-input float-right'
+        = check_box_tag :have_voucher, 1, params[:have_voucher] == '1', class: 'form-check-input float-right'
       .col-md-9
         = label_tag :have_voucher, t('.voucher')
   .form-group.my-2
