@@ -1,4 +1,3 @@
-# gkc_hash_code : 01E9QA59KWM8YA301WTJ4PG4ZW
 require 'rails_helper'
 
 RSpec.describe Exercise1Controller, type: :controller do
@@ -16,13 +15,7 @@ RSpec.describe Exercise1Controller, type: :controller do
         }
       end
 
-      it do
-        expect(assigns(:number_of_cup)).to eq 2
-        expect(assigns(:time).hour).to eq 19
-        expect(assigns(:price_at_time)).to eq 490
-        expect(assigns(:price_of_first_cup)).to eq 490
-        expect(assigns(:total_price)).to eq 980
-      end
+      it { expect(assigns(:total_price)).to eq 980 }
     end
 
     context 'when drink within discount time' do
@@ -35,14 +28,7 @@ RSpec.describe Exercise1Controller, type: :controller do
         }
       end
 
-      it do
-        expect(assigns(:number_of_cup)).to eq 2
-        expect(assigns(:time).hour).to eq 16
-        expect(assigns(:time).min).to eq 30
-        expect(assigns(:price_at_time)).to eq 290
-        expect(assigns(:price_of_first_cup)).to eq 290
-        expect(assigns(:total_price)).to eq 580
-      end
+      it { expect(assigns(:total_price)).to eq 580 }
     end
 
     context 'when have voucher' do
@@ -56,13 +42,7 @@ RSpec.describe Exercise1Controller, type: :controller do
           }
         end
 
-        it do
-          expect(assigns(:number_of_cup)).to eq 2
-          expect(assigns(:time).hour).to eq 19
-          expect(assigns(:price_at_time)).to eq 490
-          expect(assigns(:price_of_first_cup)).to eq 100
-          expect(assigns(:total_price)).to eq 590
-        end
+        it { expect(assigns(:total_price)).to eq 590 }
       end
 
       context 'when drink within discount time' do
@@ -75,14 +55,7 @@ RSpec.describe Exercise1Controller, type: :controller do
           }
         end
 
-        it do
-          expect(assigns(:number_of_cup)).to eq 2
-          expect(assigns(:time).hour).to eq 16
-          expect(assigns(:time).min).to eq 30
-          expect(assigns(:price_at_time)).to eq 290
-          expect(assigns(:price_of_first_cup)).to eq 100
-          expect(assigns(:total_price)).to eq 390
-        end
+        it { expect(assigns(:total_price)).to eq 390 }
       end
     end
 
@@ -98,9 +71,7 @@ RSpec.describe Exercise1Controller, type: :controller do
           }
         end
 
-        it do
-          expect(assigns(:number_of_cup)).to eq 0
-        end
+        it { expect(assigns(:errors)[:number_of_cup]).to eq :invalid }
       end
 
       context 'when number_of_cup is not number' do
@@ -113,9 +84,7 @@ RSpec.describe Exercise1Controller, type: :controller do
             }
           end
 
-          it do
-            expect(assigns(:number_of_cup)).to eq 0
-          end
+          it { expect(assigns(:errors)[:number_of_cup]).to eq :invalid }
         end
 
         context 'when number_of_cup is float' do
@@ -127,9 +96,7 @@ RSpec.describe Exercise1Controller, type: :controller do
             }
           end
 
-          it do
-            expect(assigns(:number_of_cup)).to eq 0
-          end
+          it { expect(assigns(:errors)[:number_of_cup]).to eq :invalid }
         end
       end
     end
@@ -144,9 +111,7 @@ RSpec.describe Exercise1Controller, type: :controller do
           }
         end
 
-        it do
-          expect(assigns(:time)).to be_kind_of(Time)
-        end
+        it { expect(assigns(:errors)[:time]).to eq :invalid }
       end
 
       context 'when time contain character' do
@@ -158,9 +123,7 @@ RSpec.describe Exercise1Controller, type: :controller do
           }
         end
 
-        it do
-          expect(assigns(:time)).to be_kind_of(Time)
-        end
+        it { expect(assigns(:errors)[:time]).to eq :invalid }
       end
     end
   end
