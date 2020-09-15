@@ -18,6 +18,7 @@ RSpec.describe Exercise1Controller, type: :controller do
 
       it do
         expect(assigns(:price_at_time)).to eq 490
+        expect(assigns(:price_of_first_cup)).to eq 490
         expect(assigns(:total_price)).to eq 980
       end
     end
@@ -34,6 +35,7 @@ RSpec.describe Exercise1Controller, type: :controller do
 
       it do
         expect(assigns(:price_at_time)).to eq 290
+        expect(assigns(:price_of_first_cup)).to eq 290
         expect(assigns(:total_price)).to eq 580
       end
     end
@@ -51,6 +53,7 @@ RSpec.describe Exercise1Controller, type: :controller do
 
         it do
           expect(assigns(:price_at_time)).to eq 490
+          expect(assigns(:price_of_first_cup)).to eq 100
           expect(assigns(:total_price)).to eq 590
         end
       end
@@ -67,6 +70,7 @@ RSpec.describe Exercise1Controller, type: :controller do
 
         it do
           expect(assigns(:price_at_time)).to eq 290
+          expect(assigns(:price_of_first_cup)).to eq 100
           expect(assigns(:total_price)).to eq 390
         end
       end
