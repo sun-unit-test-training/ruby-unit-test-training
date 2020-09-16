@@ -17,3 +17,7 @@ exercise_6:
   level_1_free_parking_time: 60 # minutes
   level_2_free_parking_time: 120 # minutes
   extra_free_parking_time_for_movie: 180 # minutes
+exercise_3:
+  price_white_shirt: 200_000 # vnd
+  price_tie: 70_000 # vnd
+  price_trousers: 150_000 # vnd
