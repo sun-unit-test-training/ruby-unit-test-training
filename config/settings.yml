@@ -6,3 +6,10 @@ exercise_1:
   price_per_cup: 490 # yen
   price_within_discount_time: 290 # yen
   price_with_voucher: 100 # yen
+
+exercise_6:
+  discount_level_1: 2000 # yen
+  discount_level_2: 5000 # yen
+  level_1_free_parking_time: 60 # minnutes
+  level_2_free_parking_time: 120 # minnutes
+  extra_free_parking_time_for_movie: 180 # minnutes
