@@ -10,6 +10,7 @@ en:
   layouts:
     sidebar:
       exercise1: Exercise 1
+      exercise2: Exercise 2
     thread:
       exercise1: |
         Giá bia bán tại "Bia hơi Keangnam" sẽ thay đổi theo các điều kiện ghi dưới đây:
@@ -20,6 +21,16 @@ en:
         ③：Nếu có voucher giảm giá thì được ưu đãi cốc đầu tiên là 100 円/yên, bất kể thời gian nào.
         ④：Voucher giảm giá được sử dụng kể cả trong thời gian ưu đãi
         ⑤：Tính theo giá rẻ nhất vào thời điểm order
+      exercise2: |
+        Khi sử dụng ATM của ngân hàng Việt Nam, phí rút tiền từ ATM sẽ thay đổi theo các điều kiện dưới đây:
+        ---
+        ●Điều kiện tiên quyết：
+        ①：Ngày thường từ 0:00～8:44, phí là 110円/yên.
+        ②：Ngày thường từ 8:45～17:59, phí là 0円/yên.
+        ③：Ngày thường từ 18:00～23:59, phí là 110円/yên.
+        ④：Thứ 7, chủ nhật, ngày nghỉ lễ phí cho tất cả các khung giờ là 110円/yên.
+        ⑤：Khách hàng đáp ứng các tiêu chí đặc thù (khách vip) , phí là 0円/yên.
+        ⑥：Điều kiện được ưu tiên cao nhất là "Khách hàng đáp ứng các tiêu chí đặc thù (khách vip) , phí là 0円/yên".
   exercise1:
     index:
       title: 'Exercise 1'
@@ -33,3 +44,8 @@ en:
           invalid: You need to input integer
         time:
           invalid: Time is invalid
+  exercise2:
+    new:
+      title: 'Exercise 2'
+      submit: 'Submit'
+      fee: 'Fee: %{fee}'

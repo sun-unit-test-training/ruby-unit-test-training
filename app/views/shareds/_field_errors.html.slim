@@ -1,0 +1,4 @@
+- if (messages = object.errors.full_messages_for(field)).any?
+  .error-messages
+    - messages.each do |msg|
+      .text-danger = msg
