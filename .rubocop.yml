@@ -21,8 +21,4 @@ AllCops:
     - 'db/**/*'
     - 'spec/**/*'
     - 'config/**/*'
-<<<<<<< HEAD
-=======
-    - 'deploy_bin/*'
->>>>>>> 85f3fdb... Fix cmt and add rubocop
     - 'node_modules/**/*'
