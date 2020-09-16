@@ -6,3 +6,9 @@ exercise_1:
   price_per_cup: 490 # yen
   price_within_discount_time: 290 # yen
   price_with_voucher: 100 # yen
+
+excercise10:
+  rank:
+    silver  : 1
+    gold    : 2
+    platinum: 3
