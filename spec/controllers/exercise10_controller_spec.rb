@@ -2,19 +2,19 @@ require "rails_helper"
 
 RSpec.describe Exercise10Controller do
   describe "POST checkout" do
+    let(:params) do
+      {
+        "rank"        : rank,
+        "total_amount": total_amount,
+      }
+    end
+
+    before do
+      post :checkout, params: params
+    end
+
     context "when checkout susccess" do
-      let(:params) do
-        {
-          "rank"        : rank,
-          "total_amount": total_amount,
-        }
-      end
-
-      before do
-        post :checkout, params: params
-      end
-
-      context "when apply discount coressponding with rank and total amount" do
+      context "when apply discount corresponding with rank and total amount" do
         shared_examples "do not discount" do |total_amount|
           let(:total_amount) { total_amount }
 
@@ -133,9 +133,9 @@ RSpec.describe Exercise10Controller do
         let(:rank) { nil }
 
         context "when has lucky draw" do
-          let(:total_amount) { 5000 }
-
           context "when total amount is 5000円" do
+            let(:total_amount) { 5000 }
+
             it do
               expect(assigns(:has_coupon)).not_to be nil
             end
@@ -163,8 +163,7 @@ RSpec.describe Exercise10Controller do
 
           context "when lucky" do
             before do
-              # percentage lucky draw to get a coupon is 20%
-              allow_any_instance_of(described_class).to receive(:rand).with(10).and_return 1
+              allow_any_instance_of(described_class).to receive(:lucky_draw).and_return true
               post :checkout, params: params
             end
 
@@ -175,7 +174,7 @@ RSpec.describe Exercise10Controller do
 
           context "when unlucky" do
             before do
-              allow_any_instance_of(described_class).to receive(:rand).with(10).and_return 2
+              allow_any_instance_of(described_class).to receive(:lucky_draw).and_return false
               post :checkout, params: params
             end
 
@@ -188,16 +187,26 @@ RSpec.describe Exercise10Controller do
     end
 
     context "when checkout failed" do
-      context "when total_amount is invalid" do
-        let(:total_amount) { "adasd" }
+      let(:rank) { 0 }
 
-        it { expect(assigns(:errors)[:total_amount]).to eq :invalid }
+      context "when total_amount is invalid" do
+        context "when total_amount is a string" do
+          let(:total_amount) { "some string" }
+
+          it { expect(assigns(:errors)[:total_amount]).to eq :invalid }
+        end
+
+        context "when total_amount is a negative" do
+          let(:total_amount) { -1 }
+
+          it { expect(assigns(:errors)[:total_amount]).to eq :invalid }
+        end
       end
     end
   end
 
   describe "GET checkout" do
-    context "return http success" do
+    context "when get success" do
       before { get :checkout }
 
       it { expect(response).to have_http_status(:ok) }

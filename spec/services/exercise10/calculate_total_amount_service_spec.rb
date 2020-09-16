@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe Exercise10::CalculateTotalAmountService do
   describe "#perform" do
-    context "when perform success" do
-      subject { described_class.new(rank, total_amount).perform }
+    subject { described_class.new(rank, total_amount).perform }
 
+    context "when perform success" do
       shared_examples "do not discount" do |total_amount|
         let(:total_amount) { total_amount }
 
@@ -120,9 +120,19 @@ RSpec.describe Exercise10::CalculateTotalAmountService do
     end
 
     context "when something failed" do
+      let(:rank) { 0 }
+
       context "when total_amount is invalid" do
-        it do
-          expect{ subject }.to raise_error
+        context "when total_amount is a string" do
+          let(:total_amount) { "some string" }
+
+          it { expect{ subject }.to raise_error }
+        end
+
+        context "when total_amount is a negative" do
+          let(:total_amount) { -1 }
+
+          it { expect{ subject }.to raise_error }
         end
       end
     end
