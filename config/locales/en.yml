@@ -16,6 +16,7 @@ en:
       exercise5: Exercise 5
       exercise6: Exercise 6
       exercise10: Exercise 10
+      exercise9: Exercise 9
     thread:
       exercise1: |
         Giá bia bán tại "Bia hơi Keangnam" sẽ thay đổi theo các điều kiện ghi dưới đây:
@@ -95,6 +96,13 @@ en:
 
         ④：Mỗi lần có thanh toán 5,000 hoặc 10,000円/yên, sẽ có 1 lần bốc thăm
         Theo 1 tỷ lệ nhất định sẽ có trúng giải và phát hành coupon giảm giá.
+      exercise9: |
+        Trong Roll Playng Game "Hanoi quest", để dũng sĩ Bánh Mì có thể đánh 「Big Boss」hùng mạnh, cần phải hoàn thành rất nhiều điều kiện.
+        ---
+        ●Điều kiện tiên quyết：
+        ①：Để tìm được căn phòng nơi có Big Boss, cần mang theo công cụ là "Đũa phép" hoặc là cần có "Quân sư" làm bạn đồng hành
+        ②：Khi vào trong phòng có Big Boss , cần mang theo công cụ là "Chìa khoá bóng đêm".
+        ③：Để đánh bại Big Boss, dũng sĩ Bánh Mì cần phải mang theo vũ khí là "Kiếm ánh sáng"
   exercise1:
     index:
       title: 'Exercise 1'
@@ -188,3 +196,23 @@ en:
           invalid: Total amount is invalid
         rank:
           invalid: Rank is invalid
+  exercise9:
+    index:
+      title: Bài 9
+      submit: Gửi
+      magic_wand: Đũa phép
+      companion_mage: Quân sư
+      dark_key: Chìa khóa bóng đêm
+      light_sword: Kiếm ánh sáng
+      inviting_you_to_choose: Mời bạn chọn
+      finded_room: Tìm thấy phòng
+      not_find_room: Không tìm thấy phòng
+      go_into_the_room: Vào phòng
+      defeat_bigboss: Đánh bại Big Boss
+      select_options:
+        -
+          - Có
+          - 1
+        -
+          - Không
+          - 0

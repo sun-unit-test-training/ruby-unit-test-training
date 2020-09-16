@@ -67,3 +67,24 @@ exercise10:
       3000: 5
       5000: 7
       10000: 15
+exercise_9:
+  not_find_room:
+    have_not_magic_wand_companion_mage_dark_key_light_sword: '0000'
+    have_not_magic_wand_companion_mage_but_have_dark_key_light_sword: '0011'
+    have_not_magic_wand_companion_mage_light_sword_but_have_dark_key: '0010'
+    have_not_magic_wand_companion_mage_dark_key_but_have_light_sword: '0001'
+  finded_room:
+    have_magic_wand_but_have_not_companion_mage_dark_key_light_sword: '1000'
+    have_magic_wand_light_sword_but_have_not_companion_mage_dark_key: '1001'
+    have_companion_mage_but_have_not_magic_wand_dark_key_light_sword: '0100'
+    have_companion_mage_light_sword_but_have_not_magic_wand_dark_key: '0101'
+    have_magic_wand_companion_mage_but_have_not_dark_key_light_sword: '1100'
+    have_magic_wand_companion_mage_light_sword_but_have_not_dark_key: '1101'
+  go_into_the_room:
+    have_dark_key_magic_wand_but_have_not_companion_mage_light_sword: '1010'
+    have_dark_key_companion_mage_but_have_not_magic_wand_light_sword: '0110'
+    have_dark_key_magic_wand_companion_mage_but_have_not_light_sword: '1110'
+  defeat_bigboss:
+    have_light_sword_dark_key_magic_wand_companion_mage: '1111'
+    have_light_sword_dark_key_magic_wand_but_have_not_companion_mage: '1011'
+    have_light_sword_dark_key_companion_mage_but_have_not_magic_wand: '0111'
