@@ -16,7 +16,10 @@
 
 # simple cov
 require "simplecov"
-SimpleCov.start "rails"
+SimpleCov.start "rails" do
+  enable_coverage :branch
+  minimum_coverage 100
+end
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

@@ -1,0 +1,46 @@
+workspace: true
+
+stages:
+  - build
+  - test
+
+jobs:
+  - name: prepare
+    stage: build
+    image: framgiaciteam/ruby:2.7.1
+    script:
+      - cp config/application-ci.yml config/application.yml
+      - bundle _2.1.4_ install --path vendor/bundle
+    cache:
+      - key: bundle_$CI_BRANCH
+        paths:
+          - vendor/bundle
+      - key: node_modules_$CI_BRANCH
+        paths:
+          - node_modules
+
+  - name: rubocop
+    stage: test
+    image: framgiaciteam/ruby:2.7.1
+    before_script:
+      - bundle _2.1.4_ install --path vendor/bundle
+    script:
+      - bundle _2.1.4_ exec rubocop
+
+  - name: rspec
+    stage: test
+    image: framgiaciteam/ruby:2.7.1
+    services:
+      - image: mysql:5.7
+        name: mysql_db
+        environment:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_USER: root
+          MYSQL_HOST: mysql_db
+    environment:
+      RAILS_ENV: test
+    before_script:
+      - bundle _2.1.4_ install --path vendor/bundle
+      - bundle exec rails db:drop db:create db:migrate
+    script:
+      - bundle _2.1.4_ exec rspec
