@@ -1,33 +1,35 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  number:
+    currency:
+      format:
+        unit: '¥'
+        delimiter: ','
+        separator: '.'
+        precision: 0
+        format: '%n%u'
+  layouts:
+    sidebar:
+      exercise1: Exercise 1
+    thread:
+      exercise1: |
+        Giá bia bán tại "Bia hơi Keangnam" sẽ thay đổi theo các điều kiện ghi dưới đây:
+        ---
+        ●Điều kiện tiên quyết：
+        ①：Thông thường giá 1 cốc bia là 490円/yên
+        ②：Từ 16:00 đến17:59 là thời gian ưu đãi nên giá 1 cốc là 290円/yên.
+        ③：Nếu có voucher giảm giá thì được ưu đãi cốc đầu tiên là 100 円/yên, bất kể thời gian nào.
+        ④：Voucher giảm giá được sử dụng kể cả trong thời gian ưu đãi
+        ⑤：Tính theo giá rẻ nhất vào thời điểm order
+  exercise1:
+    index:
+      title: 'Exercise 1'
+      number_of_cup: 'Number of cup:'
+      time: 'Time:'
+      voucher: 'Have voucher'
+      submit: 'Submit'
+      total: 'Total: %{price}'
+      errors:
+        number_of_cup:
+          invalid: You need to input integer
+        time:
+          invalid: Time is invalid

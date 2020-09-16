@@ -8,4 +8,9 @@ Style/ClassAndModuleChildren:
   # manual oversight.
   SafeAutoCorrect: false
   AutoCorrect: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
   Enabled: false

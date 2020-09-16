@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    title RubyUnitTestTraining
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_pack_tag 'application'
+  body
+    .row
+      .col-md-3.border-right
+        = render 'layouts/sidebar'
+      .col-md-8
+        h3.text-center.py-3 = yield(:title)
+        .ml-5
+          = yield
+        = render 'layouts/thread'

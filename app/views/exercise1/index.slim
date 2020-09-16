@@ -1,0 +1,30 @@
+- provide(:title, t('.title'))
+- provide(:thread, :exercise1)
+
+= form_tag :exercise1_index, method: :get, class: 'form-inline' do
+  .form-group.my-2
+    .row
+      .col-md-3
+        = label_tag :number_of_cup, t('.number_of_cup'), class: 'float-right'
+      .col-md-9
+        = number_field_tag :number_of_cup, params[:number_of_cup], class: 'form-control', min: 0
+        - if @errors[:number_of_cup]
+          p.text-danger = t(".errors.number_of_cup.#{@errors[:number_of_cup]}")
+  .form-group.my-2
+    .row
+      .col-md-3
+        = label_tag :time, t('.time'), class: 'float-right'
+      .col-md-9
+        = time_field_tag :time, params[:time] || Time.current.strftime('%H:%M'), class: 'form-control'
+        - if @errors[:time]
+          p.text-danger = t(".errors.time.#{@errors[:time]}")
+  .form-group.my-2
+    .row
+      .col-md-3
+        = check_box_tag :have_voucher, 1, params[:have_voucher] == '1', class: 'form-check-input float-right'
+      .col-md-9
+        = label_tag :have_voucher, t('.voucher')
+  .form-group.my-2
+    = submit_tag t('.submit'), class: 'btn btn-primary float-right'
+br
+p = t('.total', price: number_to_currency(@total_price))
