@@ -123,8 +123,8 @@ RSpec.describe Exercise10::CalculateTotalAmountService do
       let(:rank) { 0 }
 
       context "when total_amount is invalid" do
-        context "when total_amount is a string" do
-          let(:total_amount) { "some string" }
+        context "when total_amount contains character" do
+          let(:total_amount) { "123ada" }
 
           it { expect{ subject }.to raise_error }
         end

@@ -132,6 +132,14 @@ RSpec.describe Exercise10Controller do
       context "lucky draw" do
         let(:rank) { nil }
 
+        shared_examples "don't has lucky draw" do |total_amount|
+          let(:total_amount) { total_amount }
+
+          it do
+            expect(assigns(:has_coupon)).to be nil
+          end
+        end
+
         context "when has lucky draw" do
           context "when total amount is 5000円" do
             let(:total_amount) { 5000 }
@@ -151,11 +159,11 @@ RSpec.describe Exercise10Controller do
         end
 
         context "when don't has lucky draw" do
-          let(:total_amount) { 3000 }
-
-          it do
-            expect(assigns(:has_coupon)).to be nil
-          end
+          it_behaves_like "don't has lucky draw", 4999
+          it_behaves_like "don't has lucky draw", 5001
+          it_behaves_like "don't has lucky draw", 9999
+          it_behaves_like "don't has lucky draw", 10001
+          it_behaves_like "don't has lucky draw", 3000
         end
 
         context "when draw" do
@@ -190,8 +198,8 @@ RSpec.describe Exercise10Controller do
       let(:rank) { 0 }
 
       context "when total_amount is invalid" do
-        context "when total_amount is a string" do
-          let(:total_amount) { "some string" }
+        context "when total_amount has contains character" do
+          let(:total_amount) { "12asdas" }
 
           it { expect(assigns(:errors)[:total_amount]).to eq :invalid }
         end
