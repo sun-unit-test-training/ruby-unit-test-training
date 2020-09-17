@@ -8,9 +8,28 @@ RSpec.describe Exercise10::CalculateTotalAmountService do
       service.perform
     end
 
+    shared_examples "do not discount" do |total_amount|
+      let(:total_amount) { total_amount }
+
+      it do
+        expect(service.total_amount).to eq total_amount
+        expect(service.discount_percent).to eq 0
+        expect(service.discount_amount).to eq 0
+      end
+    end
+
+    shared_examples "out ranger discount" do
+      it_behaves_like "do not discount", 2999
+      it_behaves_like "do not discount", 3001
+      it_behaves_like "do not discount", 4999
+      it_behaves_like "do not discount", 5001
+      it_behaves_like "do not discount", 9999
+      it_behaves_like "do not discount", 10001
+    end
+
     context "when perform success" do
       context "when rank is `SILVER`" do
-        let(:rank) { Settings.excercise10.rank.silver }
+        let(:rank) { 1 }
 
         context "when total amount is 3000円" do
           let(:total_amount) { 3000 }
@@ -46,7 +65,7 @@ RSpec.describe Exercise10::CalculateTotalAmountService do
       end
 
       context "when rank is `GOLD`" do
-        let(:rank) { Settings.excercise10.rank.gold }
+        let(:rank) { 2 }
 
         context "when total amount is 3000円" do
           let(:total_amount) { 3000 }
@@ -72,7 +91,6 @@ RSpec.describe Exercise10::CalculateTotalAmountService do
           let(:total_amount) { 10000 }
 
           it "return amount discount 10%" do
-            expect(subject).to eq 9000.0
             expect(service.total_amount).to eq 9000.0
             expect(service.discount_percent).to eq 10
             expect(service.discount_amount).to eq 1000.0
@@ -83,7 +101,7 @@ RSpec.describe Exercise10::CalculateTotalAmountService do
       end
 
       context "when rank is `PLATINUM`" do
-        let(:rank) { Settings.excercise10.rank.platinum }
+        let(:rank) { 3 }
 
         context "when total amount is 3000円" do
           let(:total_amount) { 3000 }
@@ -99,7 +117,6 @@ RSpec.describe Exercise10::CalculateTotalAmountService do
           let(:total_amount) { 5000 }
 
           it "return amount discount 7%" do
-            expect(subject).to eq 4650.0
             expect(service.total_amount).to eq 4650.0
             expect(service.discount_percent).to eq 7
             expect(service.discount_amount).to eq 350.0
@@ -110,7 +127,6 @@ RSpec.describe Exercise10::CalculateTotalAmountService do
           let(:total_amount) { 10000 }
 
           it "return amount discount 15%" do
-            expect(subject).to eq 8500.0
             expect(service.total_amount).to eq 8500.0
             expect(service.discount_percent).to eq 15
             expect(service.discount_amount).to eq 1500.0
@@ -136,13 +152,13 @@ RSpec.describe Exercise10::CalculateTotalAmountService do
         context "when total_amount contains character" do
           let(:total_amount) { "123ada" }
 
-          it { expect{ subject }.to raise_error }
+          it { expect(service.errors[:total_amount]).to eq :invalid }
         end
 
         context "when total_amount is a negative" do
           let(:total_amount) { -1 }
 
-          it { expect{ subject }.to raise_error }
+          it { expect(service.errors[:total_amount]).to eq :invalid }
         end
       end
     end

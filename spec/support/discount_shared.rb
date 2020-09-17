@@ -3,7 +3,7 @@ shared_examples "do not discount" do |total_amount|
 
   it do
     expect(assigns(:total_amount)).to eq total_amount
-    expect(service.discount_percent).to eq 0
+    expect(assigns(:discount_percent)).to eq 0
     expect(assigns(:discount_amount)).to eq 0
   end
 end
