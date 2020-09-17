@@ -1,0 +1,44 @@
+- provide(:title, t('.title'))
+- provide(:thread, :exercise4)
+
+= form_tag :exercise4_index, method: :get, class: 'form-inline' do
+  .form-group.my-2
+    .row
+      .col-md-3
+        = label_tag :day_in_month, t('.september'), class: 'float-right'
+      .col-md-9
+        = date_field_tag :day_in_month, params[:day_in_month] || Time.current.strftime(Settings.exercise_4.date_fomart),
+          class: 'form-control'
+  .form-group.my-2
+    = submit_tag t('.submit'), class: 'btn btn-primary float-right'
+br
+  table.table-striped.table-bordered
+    thead
+      tr
+        th = t('.sunday')
+        th = t('.monday')
+        th = t('.tuesday')
+        th = t('.wednesday')
+        th = t('.thursday')
+        th = t('.friday')
+        th = t('.saturday')
+    tbody
+      tr
+        - (29..30).each do |day|
+          td.disable_day = day
+        - (1..5).each do |day|
+          td class="#{@choose_day[day]}" = day
+      tr
+        - (6..12).each do |day|
+          td class="#{@choose_day[day]}" = day
+      tr
+        - (13..19).each do |day|
+          td class="#{@choose_day[day]}" = day
+      tr
+        - (20..26).each do |day|
+          td class="#{@choose_day[day]}" = day
+      tr
+        - (27..31).each do |day|
+          td class="#{@choose_day[day]}" = day
+        - (01..02).each do |day|
+          td.disable_day = day

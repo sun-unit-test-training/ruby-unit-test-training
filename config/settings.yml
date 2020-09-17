@@ -7,6 +7,10 @@ exercise_1:
   price_within_discount_time: 290 # yen
   price_with_voucher: 100 # yen
 
+exercise_4:
+  date_month_format: '%d-%m'
+  date_fomart: '%d-%m-%Y'
+
 exercise_5:
   min_bill_for_discount: 1500 # yen
   discount_with_voucher: 20 # %
