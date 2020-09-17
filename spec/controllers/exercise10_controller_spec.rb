@@ -4,7 +4,7 @@ RSpec.describe Exercise10Controller do
   describe "POST checkout" do
     let(:params) do
       {
-        "rank"        : rank,
+        "rank":         rank,
         "total_amount": total_amount,
       }
     end
