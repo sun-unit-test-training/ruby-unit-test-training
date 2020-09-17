@@ -10,6 +10,7 @@ en:
   layouts:
     sidebar:
       exercise1: Exercise 1
+      exercise5: Exercise 5
       exercise6: Exercise 6
     thread:
       exercise1: |
@@ -21,6 +22,13 @@ en:
         ③：Nếu có voucher giảm giá thì được ưu đãi cốc đầu tiên là 100 円/yên, bất kể thời gian nào.
         ④：Voucher giảm giá được sử dụng kể cả trong thời gian ưu đãi
         ⑤：Tính theo giá rẻ nhất vào thời điểm order
+      exercise5: |
+        Tại cửa hàng pizza 「8 pieces pizza」có các đặc quyền sau:
+        ---
+        ●Điều kiện tiên quyết：
+        ①：Trường hợp tổng hoá đơn trên 1,500円/yên thì được miễn phí khoai tây chiên.
+        ②：Trường hợp đến lấy tại cửa hàng thì được miễn phí pizza thứ 2.
+        ③：Trường hợp giao đến nhà và có coupon giảm giá thì được giảm 20% tổng hoá đơn.
       exercise6: |
         Tại trung tâm mua sắm "Tây Hồ", hiện đang cung cấp dịch vụ trông xe miễn phí trong một khoảng thời gian nhất định, tuỳ thuộc vào tổng số tiền mua sắm và việc khách hàng có xem phim tại trung tâm không.
         ---
@@ -41,6 +49,21 @@ en:
           invalid: You need to input integer
         time:
           invalid: Time is invalid
+  exercise5:
+    index:
+      title: Exercise 5
+      total_bill: 'Tổng hóa đơn:'
+      pickup_at_store: Nhận tại cửa hàng
+      have_voucher: Có voucher
+      submit: Tạo hóa đơn
+      total: 'Tổng: %{total_bill}'
+      promotion: 'Các khuyến mãi được hưởng:'
+      errors:
+        total_bill:
+          invalid: Bạn phải nhập số nguyên
+    discount_20_percent: Giảm giá 20%
+    bonus_french_fries: Tặng khoai tây
+    bonus_pizza: Tặng Pizza thứ 2
   exercise6:
     free_parking_time:
       title: 'Exercise 6'
