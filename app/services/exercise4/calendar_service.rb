@@ -2,7 +2,7 @@ module Exercise4
   class CalendarService
     HOLIDAY = %w[01-01 30-04 01-05 02-09 05-09].freeze
 
-    def initialize day_in_month
+    def initialize(day_in_month)
       @day_in_month = day_in_month
     end
 
@@ -27,7 +27,8 @@ module Exercise4
     end
 
     def sun_holiday?
-      (HOLIDAY.include? param_todate.strftime(Settings.exercise_4.date_month_format)) || param_todate.sunday? if param_todate
+      (HOLIDAY.include? param_todate.strftime(Settings.exercise_4.date_month_format)) ||
+        param_todate.sunday?
     end
 
     def sat_holiday?
