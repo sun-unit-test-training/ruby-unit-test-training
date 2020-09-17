@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :exercise1, only: :index
   resources :exercise2, only: [:new, :create]
+  resources :exercise4, only: :index
   resources :exercise5, only: :index
   resources :exercise9, only: :index
 
