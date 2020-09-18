@@ -25,6 +25,7 @@ module Exercise6
     end
 
     private
+
     attr_reader :settings, :validations, :watch_movie
 
     def watched_movie?
@@ -39,7 +40,7 @@ module Exercise6
       @amount >= settings.discount_level_2
     end
 
-    def validate_amount number
+    def validate_amount(number)
       return number.to_i if number.to_s.match?(validations.number)
 
       @errors.merge!(amount: :invalid)
