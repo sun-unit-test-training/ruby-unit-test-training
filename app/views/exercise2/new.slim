@@ -1,0 +1,36 @@
+- provide(:title, t('.title'))
+- provide(:thread, :exercise2)
+
+= form_for @transaction, url: exercise2_index_path do |f|
+  .form-group.my-2
+    .row
+      .col-md-3.text-right
+        = f.label :withdrew_at
+      .col-md-9
+        = f.datetime_field :withdrew_at, class: 'form-control'
+        = render 'shareds/field_errors', object: @transaction, field: :withdrew_at
+  .form-group.my-2
+    .row
+      .col-md-3.text-right
+        = f.label :is_holiday
+      .col-md-9
+        = f.check_box :is_holiday, class: 'form-check-input'
+  .form-group.my-2
+    .row
+      .col-md-3.text-right
+        = f.label :amount
+      .col-md-9
+        = f.text_field :amount, class: 'form-control'
+        = render 'shareds/field_errors', object: @transaction, field: :amount
+  .form-group.my-2
+    .row
+      .col-md-3.text-right
+        = f.label :is_vip_account
+      .col-md-9
+        = f.check_box :is_vip_account, class: 'form-check-input'
+
+  .form-group.my-2.text-right
+    = submit_tag t('.submit'), class: 'btn btn-primary'
+
+-  if @fee
+  p = t('.fee', fee: number_to_currency(@fee))
