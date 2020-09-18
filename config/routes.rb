@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :exercise1, only: :index
   resources :exercise2, only: [:new, :create]
+  resources :exercise5, only: :index
   resources :exercise9, only: :index
 
   get "/exercise6", to: "exercise6#free_parking_time"
