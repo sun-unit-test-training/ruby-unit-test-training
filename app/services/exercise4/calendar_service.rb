@@ -32,12 +32,12 @@ module Exercise4
         param_todate.sunday?
     end
 
-    def sat_holiday?
-      param_todate.saturday? && (HOLIDAY.include? param_todate.strftime(Settings.exercise_4.date_month_format))
-    end
-
     def saturday?
       param_todate.saturday?
+    end
+
+    def sat_holiday?
+      saturday? && (HOLIDAY.include? param_todate.strftime(Settings.exercise_4.date_month_format))
     end
 
     TYPE_COLOR.each do |value|
