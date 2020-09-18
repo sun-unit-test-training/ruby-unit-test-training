@@ -10,11 +10,8 @@ en:
   layouts:
     sidebar:
       exercise1: Exercise 1
-<<<<<<< HEAD
       exercise2: Exercise 2
-=======
       exercise4: Exercise 4
->>>>>>> cf844dd... rebase master
       exercise5: Exercise 5
       exercise6: Exercise 6
     thread:
@@ -27,7 +24,6 @@ en:
         ③：Nếu có voucher giảm giá thì được ưu đãi cốc đầu tiên là 100 円/yên, bất kể thời gian nào.
         ④：Voucher giảm giá được sử dụng kể cả trong thời gian ưu đãi
         ⑤：Tính theo giá rẻ nhất vào thời điểm order
-<<<<<<< HEAD
       exercise2: |
         Khi sử dụng ATM của ngân hàng Việt Nam, phí rút tiền từ ATM sẽ thay đổi theo các điều kiện dưới đây:
         ---
@@ -38,7 +34,6 @@ en:
         ④：Thứ 7, chủ nhật, ngày nghỉ lễ phí cho tất cả các khung giờ là 110円/yên.
         ⑤：Khách hàng đáp ứng các tiêu chí đặc thù (khách vip) , phí là 0円/yên.
         ⑥：Điều kiện được ưu tiên cao nhất là "Khách hàng đáp ứng các tiêu chí đặc thù (khách vip) , phí là 0円/yên".
-=======
       exercise4: |
         Màu sắc các con số ngày tháng sẽ thay đổi theo các điều kiện bên dưới:
           ---
@@ -48,7 +43,6 @@ en:
           ③：Thứ 7 không phải là ngày lễ thì để màu xanh lam.
           ④：Ngày thường không phải là ngày lễ thì để màu đen. 
           ⑤：Các trường hợp mâu thuẫn với điều kiện, không cần tham khảo dưới dạng test case.
->>>>>>> cf844dd... rebase master
       exercise5: |
         Tại cửa hàng pizza 「8 pieces pizza」có các đặc quyền sau:
         ---
