@@ -1,0 +1,34 @@
+- provide :title, t('.title')
+- provide :thread, :exercise5
+
+= form_tag :exercise5_index, method: :get, class: 'form-inline' do
+  .form-group.my-2
+    .row
+      .col-md-3
+        = label_tag :total_bill, t('.total_bill'), class: 'float-right'
+      .col-md-9
+        = text_field_tag :total_bill, params[:total_bill], class: 'form-control'
+        - if @response.errors[:total_bill]
+          p.text-danger = t(".errors.total_bill.#{@response.errors[:total_bill]}")
+  .form-group.my-2
+    .row
+      .col-md-3
+        = check_box_tag :pickup_at_store, true, params[:pickup_at_store] == 'true', class: 'form-check-input float-right'
+      .col-md-9
+        = label_tag :pickup_at_store, t('.pickup_at_store')
+  .form-group.my-2
+    .row
+      .col-md-3
+        = check_box_tag :have_voucher, true, params[:have_voucher] == 'true', class: 'form-check-input float-right'
+      .col-md-9
+        = label_tag :have_voucher, t('.have_voucher')
+  .form-group.my-2
+    = submit_tag t('.submit'), class: 'btn btn-primary float-right'
+br
+p = t '.total', total_bill: number_to_currency(@response.total)
+p
+  = t '.promotion'
+  br
+  - @response.promotion.each do |promotion|
+    = '- ' + promotion
+    br
