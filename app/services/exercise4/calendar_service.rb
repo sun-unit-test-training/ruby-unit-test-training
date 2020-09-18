@@ -8,12 +8,12 @@ module Exercise4
     end
 
     def perform
-      calendar
+      calendar_color
     end
 
     private
 
-    def calendar
+    def calendar_color
       if sun_holiday? || sat_holiday?
         red_color
       elsif saturday?
