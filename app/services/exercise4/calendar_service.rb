@@ -20,7 +20,7 @@ module Exercise4
     attr_reader :day_in_month, :validations, :settings
 
     def calendar_color
-      if holiday? || sunday? || (holiday? && saturday?)
+      if holiday? || sunday?
         red_color
       elsif saturday?
         blue_color
@@ -33,16 +33,22 @@ module Exercise4
       @param_todate ||= day_in_month.to_date
     end
 
+    TYPE_COLOR.each do |value|
+      define_method "#{value}_color" do
+        { param_todate.day => value }
+      end
+    end
+
     def holiday?
       (HOLIDAY.include? param_todate.strftime(settings.date_month_format))
     end
 
-    def saturday?
-      param_todate.saturday?
-    end
-
     def sunday?
       param_todate.sunday?
+    end
+
+    def saturday?
+      param_todate.saturday?
     end
 
     def validate_day?
@@ -51,12 +57,6 @@ module Exercise4
 
       @errors.merge!(day_in_month: :invalid) unless day_in_month.blank?
       false
-    end
-
-    TYPE_COLOR.each do |value|
-      define_method "#{value}_color" do
-        { param_todate.day => value }
-      end
     end
 
     def response
