@@ -9,6 +9,8 @@
       .col-md-9
         = date_field_tag :day_in_month, params[:day_in_month] || Time.current.strftime(Settings.exercise_4.date_fomart),
           class: 'form-control'
+        - if @errors.present?
+          p.text-danger = t(".errors.day_in_month.#{@errors[:day_in_month]}")
   .form-group.my-2
     = submit_tag t('.submit'), class: 'btn btn-primary float-right'
 br

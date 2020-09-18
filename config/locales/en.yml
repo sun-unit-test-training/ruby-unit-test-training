@@ -93,8 +93,9 @@ en:
       friday: 'Friday'
       saturday: 'Saturday'
       sunday: 'Sunday'
-      twenty-nine: 29
-      thirty: 30
+      errors:
+        day_in_month:
+          invalid: You need to enter the date correct format
   exercise5:
     index:
       title: Exercise 5
