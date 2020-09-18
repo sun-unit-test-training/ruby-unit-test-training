@@ -39,22 +39,10 @@ module Exercise4
       param_todate.saturday?
     end
 
-    def red_color
-      {
-        param_todate.day => :red
-      }
-    end
-
-    def blue_color
-      {
-        param_todate.day => :blue
-      }
-    end
-
-    def black_color
-      {
-        param_todate.day => :black
-      }
+    %i(red blue black).each do |value|
+      define_method "#{value}_color" do
+        {param_todate.day => value}
+      end
     end
   end
 end
