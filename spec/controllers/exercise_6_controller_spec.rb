@@ -6,6 +6,8 @@ RSpec.describe Exercise6Controller, type: :controller do
       before { get :free_parking_time }
 
       it { expect(response).to have_http_status(:ok) }
+      it { expect(assigns(:errors)).to be_empty }
+      it { expect(assigns(:total_free_parking_time)).to eq 0 }
       it { expect(response).to render_template :free_parking_time }
     end
   end
@@ -18,23 +20,15 @@ RSpec.describe Exercise6Controller, type: :controller do
       }
     end
 
-    before do
-      post :calculate_free_parking_time, params: params
-    end
+    before { post :calculate_free_parking_time, params: params }
 
     context 'when did not watched movie' do
       let(:watch_movie) { false }
 
       context 'when total amount less than 2000' do
-        let(:total_amount) { 1000 }
+        let(:total_amount) { 1999 }
 
         it_behaves_like 'exercise 6 controller success response', free_parking_time: 0
-      end
-
-      context 'when total amount greater 2000 and less than 5000' do
-        let(:total_amount) { 2001 }
-
-        it_behaves_like 'exercise 6 controller success response', free_parking_time: 60
       end
 
       context 'when total amount is 2000' do
@@ -43,14 +37,26 @@ RSpec.describe Exercise6Controller, type: :controller do
         it_behaves_like 'exercise 6 controller success response', free_parking_time: 60
       end
 
-      context 'when total amount greater than 5000' do
-        let(:total_amount) { 5001 }
+      context 'when total amount greater 2000 and less than 5000' do
+        let(:total_amount) { 2001 }
 
-        it_behaves_like 'exercise 6 controller success response', free_parking_time: 120
+        it_behaves_like 'exercise 6 controller success response', free_parking_time: 60
+      end
+
+      context 'when total amount less than 5000' do
+        let(:total_amount) { 4999 }
+
+        it_behaves_like 'exercise 6 controller success response', free_parking_time: 60
       end
 
       context 'when total amount is 5000' do
         let(:total_amount) { 5000 }
+
+        it_behaves_like 'exercise 6 controller success response', free_parking_time: 120
+      end
+
+      context 'when total amount greater than 5000' do
+        let(:total_amount) { 5001 }
 
         it_behaves_like 'exercise 6 controller success response', free_parking_time: 120
       end
@@ -60,15 +66,9 @@ RSpec.describe Exercise6Controller, type: :controller do
       let(:watch_movie) { 'true' }
 
       context 'when total amount less than 2000' do
-        let(:total_amount) { 1000 }
+        let(:total_amount) { 1999 }
 
         it_behaves_like 'exercise 6 controller success response', free_parking_time: 180
-      end
-
-      context 'when total amount greater 2000 and less than 5000' do
-        let(:total_amount) { 2001 }
-
-        it_behaves_like 'exercise 6 controller success response', free_parking_time: 240
       end
 
       context 'when total amount is 2000' do
@@ -77,14 +77,26 @@ RSpec.describe Exercise6Controller, type: :controller do
         it_behaves_like 'exercise 6 controller success response', free_parking_time: 240
       end
 
-      context 'when total amount greater than 5000' do
-        let(:total_amount) { 5001 }
+      context 'when total amount greater 2000 and less than 5000' do
+        let(:total_amount) { 2001 }
 
-        it_behaves_like 'exercise 6 controller success response', free_parking_time: 300
+        it_behaves_like 'exercise 6 controller success response', free_parking_time: 240
+      end
+
+      context 'when total amount less than 5000' do
+        let(:total_amount) { 4999 }
+
+        it_behaves_like 'exercise 6 controller success response', free_parking_time: 240
       end
 
       context 'when total amount is 5000' do
         let(:total_amount) { 5000 }
+
+        it_behaves_like 'exercise 6 controller success response', free_parking_time: 300
+      end
+
+      context 'when total amount greater than 5000' do
+        let(:total_amount) { 5001 }
 
         it_behaves_like 'exercise 6 controller success response', free_parking_time: 300
       end
