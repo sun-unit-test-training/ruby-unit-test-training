@@ -11,6 +11,7 @@ en:
     sidebar:
       exercise1: Exercise 1
       exercise2: Exercise 2
+      exercise6: Exercise 6
     thread:
       exercise1: |
         Giá bia bán tại "Bia hơi Keangnam" sẽ thay đổi theo các điều kiện ghi dưới đây:
@@ -31,6 +32,13 @@ en:
         ④：Thứ 7, chủ nhật, ngày nghỉ lễ phí cho tất cả các khung giờ là 110円/yên.
         ⑤：Khách hàng đáp ứng các tiêu chí đặc thù (khách vip) , phí là 0円/yên.
         ⑥：Điều kiện được ưu tiên cao nhất là "Khách hàng đáp ứng các tiêu chí đặc thù (khách vip) , phí là 0円/yên".
+      exercise6: |
+        Tại trung tâm mua sắm "Tây Hồ", hiện đang cung cấp dịch vụ trông xe miễn phí trong một khoảng thời gian nhất định, tuỳ thuộc vào tổng số tiền mua sắm và việc khách hàng có xem phim tại trung tâm không.
+        ---
+        ●Điều kiện tiên quyết：
+        ①：Trường hợp tổng số tiền mua sắm từ 2,000円/yên trở lên, miễn phí phí gửi xe trong 60 phút.
+        ②：Trường hợp tổng số tiền mua sắm từ 5,000円/yên trở lên, miễn phí gửi xe trong 120 phút.
+        ③：Nếu khách hàng có xem phim, miễn phí gửi xe thêm 180 phút, cộng bổ sung vào cùng với tổng số tiền mua sắm.
   exercise1:
     index:
       title: 'Exercise 1'
@@ -49,3 +57,13 @@ en:
       title: 'Exercise 2'
       submit: 'Submit'
       fee: 'Fee: %{fee}'
+  exercise6:
+    free_parking_time:
+      title: 'Exercise 6'
+      amount: 'Amount:'
+      watch_movie: 'Customer watched movie'
+      submit: 'Submit'
+      total: 'Total free parking time: %{free_parking_time} minutes'
+      errors:
+        amount:
+          invalid: Amount must be a positive integer!
