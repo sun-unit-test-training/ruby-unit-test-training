@@ -1,6 +1,7 @@
 module Exercise4
   class CalendarService
-    HOLIDAY = %w[01-01 30-04 01-05 02-09 05-09].freeze
+    HOLIDAY = %w[01-01 30-04 01-05 02-09 05-09 27-09].freeze
+    TYPE_COLOR = %w[red blue black].freeze
 
     def initialize(day_in_month)
       @day_in_month = day_in_month
@@ -39,9 +40,9 @@ module Exercise4
       param_todate.saturday?
     end
 
-    %i(red blue black).each do |value|
+    TYPE_COLOR.each do |value|
       define_method "#{value}_color" do
-        {param_todate.day => value}
+        { param_todate.day => value }
       end
     end
   end
