@@ -5,14 +5,14 @@ class Transaction < ApplicationRecord
   }, allow_nil: true
 
   def fee
-    return 0 if is_vip_account? || free_withdraw?
+    return 0 if is_vip_account? || free_withdraw_time?
 
     110
   end
 
   private
 
-  def free_withdraw?
+  def free_withdraw_time?
     return false if is_holiday? || withdrew_at.on_weekend?
 
     free_withdraw_start = withdrew_at.change(hour: 8, min: 45)
