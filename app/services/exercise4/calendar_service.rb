@@ -1,7 +1,7 @@
 module Exercise4
   class CalendarService
     def initialize(day_in_month)
-      @day_in_month = day_in_month || ''
+      @day_in_month = day_in_month || nil
       @errors = {}
       @choose_day = {}
     end
@@ -47,7 +47,7 @@ module Exercise4
     end
 
     def validate_day?
-      is_type_date = day_in_month.match? Settings.validations.date
+      is_type_date = day_in_month&.match? Settings.validations.date
       return true if day_in_month.present? && is_type_date
 
       @errors.merge!(day_in_month: :invalid) unless day_in_month.blank?
