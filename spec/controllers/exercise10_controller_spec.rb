@@ -19,15 +19,15 @@ RSpec.describe Exercise10Controller do
     context "when checkout susccess" do
       context "when apply discount corresponding with rank and total amount" do
         context "when rank is `SILVER`" do
-          let(:rank) { 1 }
+          let(:rank) { "silver" }
 
           context "when total amount is 3000円" do
             let(:total_amount) { 3000 }
 
             it "return amount discount 1%" do
-              expect(assigns(:total_amount)).to eq 2970.0
-              expect(assigns(:discount_percent)).to eq 1
-              expect(assigns(:discount_amount)).to eq 30.0
+              expect(assigns(:response).total_amount).to eq 2970.0
+              expect(assigns(:response).discount_percent).to eq 1
+              expect(assigns(:response).discount_amount).to eq 30.0
             end
           end
 
@@ -35,9 +35,9 @@ RSpec.describe Exercise10Controller do
             let(:total_amount) { 5000 }
 
             it "return amount discount 2%" do
-              expect(assigns(:total_amount)).to eq 4900.0
-              expect(assigns(:discount_percent)).to eq 2
-              expect(assigns(:discount_amount)).to eq 100.0
+              expect(assigns(:response).total_amount).to eq 4900.0
+              expect(assigns(:response).discount_percent).to eq 2
+              expect(assigns(:response).discount_amount).to eq 100.0
             end
           end
 
@@ -45,9 +45,9 @@ RSpec.describe Exercise10Controller do
             let(:total_amount) { 10000 }
 
             it "return amount discount 4%" do
-              expect(assigns(:total_amount)).to eq 9600.0
-              expect(assigns(:discount_percent)).to eq 4
-              expect(assigns(:discount_amount)).to eq 400.0
+              expect(assigns(:response).total_amount).to eq 9600.0
+              expect(assigns(:response).discount_percent).to eq 4
+              expect(assigns(:response).discount_amount).to eq 400.0
             end
           end
 
@@ -55,15 +55,15 @@ RSpec.describe Exercise10Controller do
         end
 
         context "when rank is `GOLD`" do
-          let(:rank) { 2 }
+          let(:rank) { "gold" }
 
           context "when total amount is 3000円" do
             let(:total_amount) { 3000 }
 
             it "return amount discount 3%" do
-              expect(assigns(:total_amount)).to eq 2910.0
-              expect(assigns(:discount_percent)).to eq 3
-              expect(assigns(:discount_amount)).to eq 90.0
+              expect(assigns(:response).total_amount).to eq 2910.0
+              expect(assigns(:response).discount_percent).to eq 3
+              expect(assigns(:response).discount_amount).to eq 90.0
             end
           end
 
@@ -71,9 +71,9 @@ RSpec.describe Exercise10Controller do
             let(:total_amount) { 5000 }
 
             it "return amount discount 5%" do
-              expect(assigns(:total_amount)).to eq 4750.0
-              expect(assigns(:discount_percent)).to eq 5
-              expect(assigns(:discount_amount)).to eq 250.0
+              expect(assigns(:response).total_amount).to eq 4750.0
+              expect(assigns(:response).discount_percent).to eq 5
+              expect(assigns(:response).discount_amount).to eq 250.0
             end
           end
 
@@ -81,9 +81,9 @@ RSpec.describe Exercise10Controller do
             let(:total_amount) { 10000 }
 
             it "return amount discount 10%" do
-              expect(assigns(:total_amount)).to eq 9000.0
-              expect(assigns(:discount_percent)).to eq 10
-              expect(assigns(:discount_amount)).to eq 1000.0
+              expect(assigns(:response).total_amount).to eq 9000.0
+              expect(assigns(:response).discount_percent).to eq 10
+              expect(assigns(:response).discount_amount).to eq 1000.0
             end
           end
 
@@ -91,15 +91,15 @@ RSpec.describe Exercise10Controller do
         end
 
         context "when rank is `PLATINUM`" do
-          let(:rank) { 3 }
+          let(:rank) { "platinum" }
 
           context "when total amount is 3000円" do
             let(:total_amount) { 3000 }
 
             it "return amount discount 5%" do
-              expect(assigns(:total_amount)).to eq 2850.0
-              expect(assigns(:discount_percent)).to eq 5
-              expect(assigns(:discount_amount)).to eq 150.0
+              expect(assigns(:response).total_amount).to eq 2850.0
+              expect(assigns(:response).discount_percent).to eq 5
+              expect(assigns(:response).discount_amount).to eq 150.0
             end
           end
 
@@ -107,9 +107,9 @@ RSpec.describe Exercise10Controller do
             let(:total_amount) { 5000 }
 
             it "return amount discount 7%" do
-              expect(assigns(:total_amount)).to eq 4650.0
-              expect(assigns(:discount_percent)).to eq 7
-              expect(assigns(:discount_amount)).to eq 350.0
+              expect(assigns(:response).total_amount).to eq 4650.0
+              expect(assigns(:response).discount_percent).to eq 7
+              expect(assigns(:response).discount_amount).to eq 350.0
             end
           end
 
@@ -117,9 +117,9 @@ RSpec.describe Exercise10Controller do
             let(:total_amount) { 10000 }
 
             it "return amount discount 15%" do
-              expect(assigns(:total_amount)).to eq 8500.0
-              expect(assigns(:discount_percent)).to eq 15
-              expect(assigns(:discount_amount)).to eq 1500.0
+              expect(assigns(:response).total_amount).to eq 8500.0
+              expect(assigns(:response).discount_percent).to eq 15
+              expect(assigns(:response).discount_amount).to eq 1500.0
             end
           end
 
