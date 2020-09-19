@@ -1,12 +1,7 @@
 module Exercise4
   class CalendarService
-    HOLIDAY = %w[01-01 30-04 01-05 02-09 05-09 27-09].freeze
-    TYPE_COLOR = %w[red blue black].freeze
-
     def initialize(day_in_month)
       @day_in_month = day_in_month || ''
-      @settings = Settings.exercise_4
-      @validations = Settings.validations
       @errors = {}
       @choose_day = {}
     end
@@ -17,7 +12,7 @@ module Exercise4
 
     private
 
-    attr_reader :day_in_month, :validations, :settings
+    attr_reader :day_in_month
 
     def calendar_color
       if holiday? || sunday?
@@ -33,14 +28,14 @@ module Exercise4
       @param_todate ||= day_in_month.to_date
     end
 
-    TYPE_COLOR.each do |value|
+    Settings.exercise_4.type_color.each do |value|
       define_method "#{value}_color" do
         { param_todate.day => value }
       end
     end
 
     def holiday?
-      (HOLIDAY.include? param_todate.strftime(settings.date_month_format))
+      (Settings.exercise_4.holiday.include? param_todate.strftime(Settings.exercise_4.date_month_format))
     end
 
     def sunday?
@@ -52,7 +47,7 @@ module Exercise4
     end
 
     def validate_day?
-      is_type_date = day_in_month.match?(validations.date)
+      is_type_date = day_in_month.match? Settings.validations.date
       return true if day_in_month.present? && is_type_date
 
       @errors.merge!(day_in_month: :invalid) unless day_in_month.blank?

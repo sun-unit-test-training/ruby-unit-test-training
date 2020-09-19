@@ -11,6 +11,17 @@ exercise_1:
 exercise_4:
   date_month_format: '%d-%m'
   date_fomart: '%d-%m-%Y'
+  holiday: 
+    - 01-01
+    - 30-04
+    - 01-05
+    - 02-09
+    - 05-09
+    - 27-09
+  type_color:
+    - red
+    - blue
+    - black
 
 exercise_5:
   min_bill_for_discount: 1500 # yen
