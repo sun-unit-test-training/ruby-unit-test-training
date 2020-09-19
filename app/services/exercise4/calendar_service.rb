@@ -47,8 +47,7 @@ module Exercise4
     end
 
     def validate_day?
-      is_type_date = day_in_month&.match? Settings.validations.date
-      return true if day_in_month.present? && is_type_date
+      return true if day_in_month&.match? Settings.validations.date
 
       @errors.merge!(day_in_month: :invalid) unless day_in_month.blank?
       false
