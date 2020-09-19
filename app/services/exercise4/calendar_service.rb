@@ -1,7 +1,7 @@
 module Exercise4
   class CalendarService
-    def initialize(day_in_month)
-      @day_in_month = day_in_month || nil
+    def initialize(day_in_month = nil)
+      @day_in_month = day_in_month
       @errors = {}
       @choose_day = {}
     end
