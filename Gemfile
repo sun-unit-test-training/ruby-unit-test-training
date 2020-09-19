@@ -30,6 +30,9 @@ gem 'figaro'
 gem 'slim'
 gem 'config'
 gem 'bootstrap', '~> 5.0.0.alpha1'
+gem 'i18n'
+gem 'therubyracer'
+gem 'execjs'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
