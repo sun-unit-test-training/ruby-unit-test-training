@@ -82,6 +82,18 @@ RSpec.describe Exercise7::CalculateService, type: :service do
     describe 'calculate logic' do
       let(:args) { [total_amount, fast_delivery, premium] }
 
+      share_examples 'calculate logic tests' do |premium, total_amount, fast_delivery, normal_delivery_price, fast_delivery_price, delivery_fee|
+        it do
+          response = service.perform
+          expect(service.instance_values['premium']).to eq premium
+          expect(service.instance_values['total_amount']).to eq total_amount
+          expect(service.instance_values['fast_delivery']).to eq fast_delivery
+          expect(service.instance_values['normal_delivery_price']).to eq normal_delivery_price
+          expect(service.instance_values['fast_delivery_price']).to eq fast_delivery_price
+          expect(response.delivery_fee).to eq delivery_fee
+        end
+      end
+
       context 'when user is not premium member' do
         let(:premium) { '0' }
 
@@ -91,31 +103,13 @@ RSpec.describe Exercise7::CalculateService, type: :service do
           context 'when do not have fast_delivery' do
             let(:fast_delivery) { '0' }
 
-            it do
-              response = service.perform
-              expect(service.instance_values['total_amount']).to eq 4999
-              expect(service.instance_values['fast_delivery']).to eq false
-              expect(service.instance_values['premium']).to eq false
-              expect(service.instance_values['normal_delivery_price']).to eq 500
-              expect(service.instance_values['fast_delivery_price']).to eq 0
-              expect(response.delivery_fee).to eq 500
-            end
+            include_examples 'calculate logic tests', false, 4999, false, 500, 0, 500
           end
 
           context 'when have fast_delivery' do
             let(:fast_delivery) { '1' }
 
-            it { expect(assigns(:delivery_fee).to eq 1000) }
-
-            it do
-              response = service.perform
-              expect(service.instance_values['premium']).to eq false
-              expect(service.instance_values['total_amount']).to eq 4999
-              expect(service.instance_values['fast_delivery']).to eq true
-              expect(service.instance_values['normal_delivery_price']).to eq 500
-              expect(service.instance_values['fast_delivery_price']).to eq 500
-              expect(response.delivery_fee).to eq 1000
-            end
+            include_examples 'calculate logic tests', false, 4999, true, 500, 500, 1000
           end
         end
 
@@ -125,29 +119,13 @@ RSpec.describe Exercise7::CalculateService, type: :service do
           context 'when do not have fast_delivery' do
             let(:fast_delivery) { '0' }
 
-            it do
-              response = service.perform
-              expect(service.instance_values['premium']).to eq false
-              expect(service.instance_values['total_amount']).to eq 5000
-              expect(service.instance_values['fast_delivery']).to eq false
-              expect(service.instance_values['normal_delivery_price']).to eq 0
-              expect(service.instance_values['fast_delivery_price']).to eq 0
-              expect(response.delivery_fee).to eq 0
-            end
+            include_examples 'calculate logic tests', false, 5000, false, 0, 0, 0
           end
 
           context 'when have fast_delivery' do
             let(:fast_delivery) { '1' }
 
-            it do
-              response = service.perform
-              expect(service.instance_values['premium']).to eq false
-              expect(service.instance_values['total_amount']).to eq 5000
-              expect(service.instance_values['fast_delivery']).to eq true
-              expect(service.instance_values['normal_delivery_price']).to eq 0
-              expect(service.instance_values['fast_delivery_price']).to eq 500
-              expect(response.delivery_fee).to eq 500
-            end
+            include_examples 'calculate logic tests', false, 5000, true, 0, 500, 500
           end
         end
 
@@ -157,29 +135,13 @@ RSpec.describe Exercise7::CalculateService, type: :service do
           context 'when do not have fast_delivery' do
             let(:fast_delivery) { '0' }
 
-            it do
-              response = service.perform
-              expect(service.instance_values['premium']).to eq false
-              expect(service.instance_values['total_amount']).to eq 5001
-              expect(service.instance_values['fast_delivery']).to eq false
-              expect(service.instance_values['normal_delivery_price']).to eq 0
-              expect(service.instance_values['fast_delivery_price']).to eq 0
-              expect(response.delivery_fee).to eq 0
-            end
+            include_examples 'calculate logic tests', false, 5001 , false, 0, 0, 0
           end
 
           context 'when have fast_delivery' do
             let(:fast_delivery) { '1' }
 
-            it do
-              response = service.perform
-              expect(service.instance_values['premium']).to eq false
-              expect(service.instance_values['total_amount']).to eq 5001
-              expect(service.instance_values['fast_delivery']).to eq true
-              expect(service.instance_values['normal_delivery_price']).to eq 0
-              expect(service.instance_values['fast_delivery_price']).to eq 500
-              expect(response.delivery_fee).to eq 500
-            end
+            include_examples 'calculate logic tests', false, 5001, true, 0, 500, 500
           end
         end
       end
@@ -193,29 +155,13 @@ RSpec.describe Exercise7::CalculateService, type: :service do
           context 'when do not have fast_delivery' do
             let(:fast_delivery) { '0' }
 
-            it do
-              response = service.perform
-              expect(service.instance_values['premium']).to eq true
-              expect(service.instance_values['total_amount']).to eq 4999
-              expect(service.instance_values['fast_delivery']).to eq false
-              expect(service.instance_values['normal_delivery_price']).to eq 0
-              expect(service.instance_values['fast_delivery_price']).to eq 0
-              expect(response.delivery_fee).to eq 0
-            end
+            include_examples 'calculate logic tests', true, 4999, false, 0, 0, 0
           end
 
           context 'when have fast_delivery' do
             let(:fast_delivery) { '1' }
 
-            it do
-              response = service.perform
-              expect(service.instance_values['premium']).to eq true
-              expect(service.instance_values['total_amount']).to eq 4999
-              expect(service.instance_values['fast_delivery']).to eq true
-              expect(service.instance_values['normal_delivery_price']).to eq 0
-              expect(service.instance_values['fast_delivery_price']).to eq 500
-              expect(response.delivery_fee).to eq 500
-            end
+            include_examples 'calculate logic tests', true, 4999, true, 0, 500, 500
           end
         end
 
@@ -225,29 +171,13 @@ RSpec.describe Exercise7::CalculateService, type: :service do
           context 'when do not have fast_delivery' do
             let(:fast_delivery) { '0' }
 
-            it do
-              response = service.perform
-              expect(service.instance_values['premium']).to eq true
-              expect(service.instance_values['total_amount']).to eq 5000
-              expect(service.instance_values['fast_delivery']).to eq false
-              expect(service.instance_values['normal_delivery_price']).to eq 0
-              expect(service.instance_values['fast_delivery_price']).to eq 0
-              expect(response.delivery_fee).to eq 0
-            end
+            include_examples 'calculate logic tests', true, 5000, false, 0, 0, 0
           end
 
           context 'when have fast_delivery' do
             let(:fast_delivery) { '1' }
 
-            it do
-              response = service.perform
-              expect(service.instance_values['premium']).to eq true
-              expect(service.instance_values['total_amount']).to eq 5000
-              expect(service.instance_values['fast_delivery']).to eq true
-              expect(service.instance_values['normal_delivery_price']).to eq 0
-              expect(service.instance_values['fast_delivery_price']).to eq 500
-              expect(response.delivery_fee).to eq 500
-            end
+            include_examples 'calculate logic tests', true, 5000, true, 0, 500, 500
           end
         end
 
@@ -257,29 +187,13 @@ RSpec.describe Exercise7::CalculateService, type: :service do
           context 'when do not have fast_delivery' do
             let(:fast_delivery) { '0' }
 
-            it do
-              response = service.perform
-              expect(service.instance_values['premium']).to eq true
-              expect(service.instance_values['total_amount']).to eq 5001
-              expect(service.instance_values['fast_delivery']).to eq false
-              expect(service.instance_values['normal_delivery_price']).to eq 0
-              expect(service.instance_values['fast_delivery_price']).to eq 0
-              expect(response.delivery_fee).to eq 0
-            end
+            include_examples 'calculate logic tests', true, 5001, false, 0, 0, 0
           end
 
           context 'when have fast_delivery' do
             let(:fast_delivery) { '1' }
 
-            it do
-              response = service.perform
-              expect(service.instance_values['premium']).to eq true
-              expect(service.instance_values['total_amount']).to eq 5001
-              expect(service.instance_values['fast_delivery']).to eq true
-              expect(service.instance_values['normal_delivery_price']).to eq 0
-              expect(service.instance_values['fast_delivery_price']).to eq 500
-              expect(response.delivery_fee).to eq 500
-            end
+            include_examples 'calculate logic tests', true, 5001, true, 0, 500, 500
           end
         end
       end
