@@ -5,7 +5,7 @@ RSpec.describe Exercise4Controller, type: :controller do
     before { get :index, params: params }
 
     shared_examples 'calendar color' do
-      let(:params) { day_in_month: day_in_month }}
+      let(:params) {{ day_in_month: day_in_month }}
       it { expect(assigns(:choose_day)).to eq calerdar_color }
     end
 
