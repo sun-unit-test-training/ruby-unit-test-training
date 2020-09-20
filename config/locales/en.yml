@@ -123,6 +123,11 @@ en:
       discount_percent: 'Discount Percent: %{percent}'
       discount_price: 'Discount Price: %{discount_price}'
       total_price: 'Total Price: %{price}'
+      price_table: 'Price Table'
+      white_shirt_price: 'White shirt price: %{price}'
+      tie_price: 'Tie price: %{price}'
+      other:
+        hat_price: 'Hat price: %{price}'
       errors:
         number:
           invalid: You need to input integer

@@ -28,9 +28,10 @@ exercise_5:
   discount_with_voucher: 20 # %
 
 exercise_3:
-  price_white_shirt: 200_000 # vnd
-  price_tie: 70_000 # vnd
-  price_hat: 10_000 # vnd
+  white_shirt_price: 200_000 # vnd
+  tie_price: 70_000 # vnd
+  other:
+    hat_price: 10_000 # vnd
 
 exercise_6:
   discount_level_1: 2000 # yen
