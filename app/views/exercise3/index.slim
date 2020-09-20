@@ -1,0 +1,36 @@
+- provide(:title, t('.title'))
+- provide(:thread, :exercise3)
+
+= form_tag :exercise3_index, method: :get, class: 'form-inline' do
+  .form-group.my-2
+    .row
+      .col-md-3
+        = label_tag :white_shirt_amount, t('.white_shirt_amount'), class: 'float-right'
+      .col-md-9
+        = number_field_tag :white_shirt_amount, params[:white_shirt_amount], class: 'form-control'
+        - if @errors[:white_shirt_amount]
+          p.text-danger = t(".errors.number.#{@errors[:white_shirt_amount]}")
+  .form-group.my-2
+    .row
+      .col-md-3
+        = label_tag :tie_amount, t('.tie_amount'), class: 'float-right'
+      .col-md-9
+        = number_field_tag :tie_amount, params[:tie_amount], class: 'form-control'
+        - if @errors[:tie_amount]
+          p.text-danger = t(".errors.number.#{@errors[:tie_amount]}")
+  .form-group.my-2
+    .row
+      .col-md-3
+        = label_tag :hat_amount, t('.hat_amount'), class: 'float-right'
+      .col-md-9
+        = number_field_tag :hat_amount, params[:hat_amount], class: 'form-control'
+        - if @errors[:hat_amount]
+          p.text-danger = t(".errors.number.#{@errors[:hat_amount]}")
+  .form-group.my-2.text-center
+    = submit_tag t('.submit'), class: 'btn btn-primary float-right'
+br
+b = t('.discount_percent', percent: number_to_currency(@discount_percent, unit: '%'))
+br
+b = t('.discount_price', discount_price: number_to_currency(@discount_price, unit: 'VND'))
+br
+b = t('.total_price', price: number_to_currency(@total_price, unit: 'VND'))

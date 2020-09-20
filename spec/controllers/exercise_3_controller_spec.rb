@@ -12,7 +12,7 @@ RSpec.describe Exercise3Controller, type: :controller do
       end
     end
 
-    shared_examples 'applied discount 12 %' do |total_price|
+    shared_examples 'applied discount 12 %' do |total_price, discount_price|
       let(:total_price) { total_price }
       let(:discount_price) { discount_price }
       it do
@@ -22,7 +22,7 @@ RSpec.describe Exercise3Controller, type: :controller do
       end
     end
 
-    shared_examples 'applied discount 7 %' do |total_price|
+    shared_examples 'applied discount 7 %' do |total_price, discount_price|
       let(:total_price) { total_price }
       let(:discount_price) { discount_price }
       it do
@@ -170,7 +170,7 @@ RSpec.describe Exercise3Controller, type: :controller do
             }
           end
 
-          it_behaves_like 'applied discount 7 %', 1_023_000.0, 77_000.0
+          it_behaves_like 'applied discount 7 %', 604_500.0, 45_500.0
         end
 
         context 'with total amount < 7' do
@@ -262,7 +262,7 @@ RSpec.describe Exercise3Controller, type: :controller do
         end
       end
 
-      context 'buy only tie'
+      context 'buy only tie' do
         context 'with total amount = 7' do
           let(:params) do
             {
@@ -339,15 +339,29 @@ RSpec.describe Exercise3Controller, type: :controller do
       end
 
       context 'do not buy anything' do
-        let(:params) do
-          {
-            white_shirt_amount: 0,
-            tie_amount: 0,
-            hat_amount: 0,
-          }
+        context 'all input is 0' do
+          let(:params) do
+            {
+              white_shirt_amount: 0,
+              tie_amount: 0,
+              hat_amount: 0,
+            }
+          end
+
+          it_behaves_like "do not applied discount", 0
         end
 
-        it_behaves_like "do not applied discount", 0
+        context 'all input is empty' do
+          let(:params) do
+            {
+              white_shirt_amount: "",
+              tie_amount: "",
+              hat_amount: "",
+            }
+          end
+
+          it_behaves_like "do not applied discount", 0
+        end
       end
     end
   end
