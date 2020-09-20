@@ -27,6 +27,11 @@ exercise_5:
   min_bill_for_discount: 1500 # yen
   discount_with_voucher: 20 # %
 
+exercise_3:
+  price_white_shirt: 200_000 # vnd
+  price_tie: 70_000 # vnd
+  price_hat: 10_000 # vnd
+
 exercise_6:
   discount_level_1: 2000 # yen
   discount_level_2: 5000 # yen

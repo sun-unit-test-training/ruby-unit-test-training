@@ -9,4 +9,5 @@ Rails.application.routes.draw do
 
   get "/exercise6", to: "exercise6#free_parking_time"
   post "/exercise6", to: "exercise6#calculate_free_parking_time"
+  resources :exercise3, only: :index
 end
