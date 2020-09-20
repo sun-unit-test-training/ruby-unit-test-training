@@ -33,13 +33,13 @@ RSpec.describe Exercise7::CalculateService, type: :service do
       context 'when total_amount is negative' do
         let(:args) { [-2, '1', '1'] }
 
-        it { expect(response.errors[:number_of_cup]).to eq :invalid }
+        it { expect(response.errors[:total_amount]).to eq :invalid }
       end
 
       context 'when total_amount is text' do
         let(:args) { ['a', '1', '1'] }
 
-        it { expect(response.errors[:number_of_cup]).to eq :invalid }
+        it { expect(response.errors[:total_amount]).to eq :invalid }
       end
 
       context 'when fast_delivery is integer' do
