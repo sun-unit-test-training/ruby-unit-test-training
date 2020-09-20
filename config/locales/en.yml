@@ -152,7 +152,7 @@ en:
       discount_percent: 'Discount Percent'
       discount_amount: 'Discount Amount'
       total: 'Total'
-      coupon_infor: "Your coupon is %{coupon}"
+      coupon_infor: 'Your coupon is %{coupon}'
       errors:
         total_amount:
           invalid: Total amount is invalid

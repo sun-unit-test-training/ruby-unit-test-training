@@ -1,6 +1,10 @@
 module CouponModule
   extend ActiveSupport::Concern
 
+  included do
+    helper_method :amount_in_range_get_coupon?
+  end
+
   private
 
   def given_coupon(total_amount, give_coupon)
