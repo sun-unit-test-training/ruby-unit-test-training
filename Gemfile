@@ -38,6 +38,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'factory_bot_rails'
   gem 'rubocop', require: false
+  gem 'timecop', '~> 0.9.1'
 end
 
 group :development do
