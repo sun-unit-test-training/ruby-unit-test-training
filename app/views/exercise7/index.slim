@@ -1,0 +1,35 @@
+- provide(:title, t('.title'))
+- provide(:thread, :exercise7)
+
+= form_tag exercise7_index_path, method: :get do
+  .form-group.my-2
+    .row
+      .col-md-3.text-right
+        = label_tag :total_amount
+      .col-md-9
+        = number_field_tag :total_amount, params[:total_amount], min: 0, step: 1, class: 'form-control'
+        - if @errors[:total_amount]
+          p.text-danger = t(".errors.total_amount.#{@errors[:total_amount]}")
+  .form-group.my-2
+    .row
+      .col-md-3.text-right
+        = label_tag :fast_delivery
+      .col-md-9
+        = hidden_field_tag :fast_delivery, 0
+        = check_box_tag :fast_delivery, 1, params[:fast_delivery] == '1', class: 'form-check-input'
+        - if @errors[:fast_delivery]
+          p.text-danger = t(".errors.fast_delivery.#{@errors[:fast_delivery]}")
+  .form-group.my-2
+    .row
+      .col-md-3.text-right
+        = label_tag :premium, t('.premium_member')
+      .col-md-9
+        = hidden_field_tag :premium, 0
+        = check_box_tag :premium, 1, params[:premium] == '1', class: 'form-check-input'
+        - if @errors[:premium]
+          p.text-danger = t(".errors.premium.#{@errors[:premium]}")
+
+  .form-group.my-2.text-right
+    = submit_tag t('.submit'), class: 'btn btn-primary'
+
+p = t('.delivery_fee', fee: number_to_currency(@delivery_fee))
