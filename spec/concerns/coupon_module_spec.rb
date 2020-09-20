@@ -3,15 +3,13 @@ require "rails_helper"
 class DummyController < ApplicationController; end
 
 RSpec.describe CouponModule, type: :controller do
-  let(:dummy_controller) { ApplicationController.new { extend CouponModule }}
-
   controller(DummyController) do
     include CouponModule
 
     def index
       @coupon = given_coupon(params[:total_amount].to_i, params[:give_coupon])
 
-      redirect_to "/fake_url"
+      render nothing: true
     end
   end
 
