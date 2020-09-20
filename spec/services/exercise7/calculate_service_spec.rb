@@ -46,8 +46,7 @@ RSpec.describe Exercise7::CalculateService, type: :service do
         let(:args) { [2, 1, '1'] }
 
         it do
-          response
-          expect(service.instance_values['fast_delivery']).to eq false
+          expect(response.errors[:fast_delivery]).to eq :invalid
         end
       end
 
@@ -55,8 +54,7 @@ RSpec.describe Exercise7::CalculateService, type: :service do
         let(:args) { [2, 'a', '1'] }
 
         it do
-          response
-          expect(service.instance_values['fast_delivery']).to eq false
+          expect(response.errors[:fast_delivery]).to eq :invalid
         end
       end
 
@@ -64,8 +62,7 @@ RSpec.describe Exercise7::CalculateService, type: :service do
         let(:args) { [2, '1', 1] }
 
         it do
-          response
-          expect(service.instance_values['premium']).to eq false
+          expect(response.errors[:premium]).to eq :invalid
         end
       end
 
@@ -73,8 +70,7 @@ RSpec.describe Exercise7::CalculateService, type: :service do
         let(:args) { [2, '1', 'a'] }
 
         it do
-          response
-          expect(service.instance_values['premium']).to eq false
+          expect(response.errors[:premium]).to eq :invalid
         end
       end
     end
