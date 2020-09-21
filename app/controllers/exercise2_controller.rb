@@ -5,7 +5,7 @@ class Exercise2Controller < ApplicationController
 
   def create
     @transaction = Transaction.new transaction_params
-    @fee = @transaction.fee if @transaction.valid?
+    @fee = @transaction.fee
     render :new
   end
 
