@@ -38,7 +38,7 @@ RSpec.describe Exercise4Controller, type: :controller do
       end
     end
 
-    context 'when day_in_month is satuday' do
+    context 'when day_in_month is saturday' do
       let(:day_in_month) {"2020-9-12" }
       let(:calendar_color) {{ 12=>"blue" }}
 
