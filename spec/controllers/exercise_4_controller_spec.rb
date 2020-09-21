@@ -17,21 +17,21 @@ RSpec.describe Exercise4Controller, type: :controller do
 
     context 'when day_in_month is holiday' do
       context 'and day_in_month is sunday' do
-        let(:day_in_month) { "2020-9-27" }
+        let(:day_in_month) { "2020-09-27" }
         let(:calendar_color) {{ 27=>"red" }}
 
         include_examples 'calendar color', :calendar_color, :error
       end
 
       context 'and day_in_month is saturday' do
-        let(:day_in_month) { "2020-9-05" }
+        let(:day_in_month) { "2020-09-05" }
         let(:calendar_color) {{ 5=>"red" }}
 
         include_examples 'calendar color', :calendar_color, :error
       end
 
       context 'when day_in_month is normal day' do
-        let(:day_in_month) { "2020-9-02" }
+        let(:day_in_month) { "2020-09-02" }
         let(:calendar_color) {{ 2=>"red" }}
 
         include_examples 'calendar color', :calendar_color, :error
@@ -39,21 +39,21 @@ RSpec.describe Exercise4Controller, type: :controller do
     end
 
     context 'when day_in_month is saturday' do
-      let(:day_in_month) {"2020-9-12" }
+      let(:day_in_month) {"2020-09-12" }
       let(:calendar_color) {{ 12=>"blue" }}
 
       include_examples 'calendar color', :calendar_color, :error
     end
 
     context 'when day_in_month is sunday' do
-      let(:day_in_month) { "2020-9-20" }
+      let(:day_in_month) { "2020-09-20" }
       let(:calendar_color) {{ 20=>"red" }}
 
       include_examples 'calendar color', :calendar_color, :error
     end
 
     context 'when day_in_month is normal day' do
-      let(:day_in_month) { "2020-9-10" }
+      let(:day_in_month) { "2020-09-10" }
       let(:calendar_color) {{ 10=>"black" }}
 
       include_examples 'calendar color', :calendar_color, :error
