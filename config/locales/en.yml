@@ -11,6 +11,7 @@ en:
     sidebar:
       exercise1: Exercise 1
       exercise2: Exercise 2
+      exercise3: Exercise 3
       exercise4: Exercise 4
       exercise5: Exercise 5
       exercise6: Exercise 6
@@ -35,6 +36,17 @@ en:
         ④：Thứ 7, chủ nhật, ngày nghỉ lễ phí cho tất cả các khung giờ là 110円/yên.
         ⑤：Khách hàng đáp ứng các tiêu chí đặc thù (khách vip) , phí là 0円/yên.
         ⑥：Điều kiện được ưu tiên cao nhất là "Khách hàng đáp ứng các tiêu chí đặc thù (khách vip) , phí là 0円/yên".
+      exercise3: |
+        Tại cửa hàng quần áo nam trên Hoàn Kiếm, có thể mua được giảm giá dựa trên các điều kiện sau:
+        ---
+        ●Điều kiện tiên quyết：
+        ①：Trong số các mặt hàng mua, có cả áo sơ mi trắng và cà vạt, thì sẽ được giảm 5% trên tổng hoá đơn.
+        ②：Trường hợp mua từ trên 7 mặt hàng, được giảm 7% trên tổng hoá đơn.
+        ③：Có thể áp dụng đồng thời ưu đãi ① và ②, tức là sẽ được giảm 12% trên tổng hoá đơn.
+        ④：Thứ tự ưu tiên về logic áp dụng giảm giá như bên dưới:
+        ・Có mua từ 7 mặt hàng trở lên hay không?
+        ・Có bao gồm áo sơ mi trắng hay không?
+        ・Có bao gồm cà vạt hay không?
       exercise4: |
         Màu sắc các con số ngày tháng sẽ thay đổi theo các điều kiện bên dưới:
           ---
@@ -101,6 +113,24 @@ en:
       title: 'Exercise 2'
       submit: 'Submit'
       fee: 'Fee: %{fee}'
+  exercise3:
+    index:
+      title: 'Exercise 3'
+      submit: 'Submit'
+      white_shirt_amount: 'White-Shirt amount'
+      tie_amount: 'Tie amount'
+      hat_amount: 'Hat amount'
+      discount_percent: 'Discount Percent: %{percent}'
+      discount_price: 'Discount Price: %{discount_price}'
+      total_price: 'Total Price: %{price}'
+      price_table: 'Price Table'
+      white_shirt_price: 'White shirt price: %{price}'
+      tie_price: 'Tie price: %{price}'
+      other:
+        hat_price: 'Hat price: %{price}'
+      errors:
+        number:
+          invalid: You need to input integer
   exercise4:
     index:
       title: 'Exercise 4'

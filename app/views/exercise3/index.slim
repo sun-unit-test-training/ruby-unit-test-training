@@ -1,0 +1,46 @@
+- provide(:title, t('.title'))
+- provide(:thread, :exercise3)
+
+.row
+  = form_tag :exercise3_index, method: :get, class: 'form-inline col-md-8' do
+    .form-group.my-2
+      .row
+        .col-md-3
+          = label_tag :white_shirt_amount, t('.white_shirt_amount'), class: 'float-right'
+        .col-md-9
+          = number_field_tag :white_shirt_amount, params[:white_shirt_amount].present? ? params[:white_shirt_amount]: 0,
+            class: 'form-control'
+          - if @errors[:white_shirt_amount]
+            p.text-danger = t(".errors.number.#{@errors[:white_shirt_amount]}")
+    .form-group.my-2
+      .row
+        .col-md-3
+          = label_tag :tie_amount, t('.tie_amount'), class: 'float-right'
+        .col-md-9
+          = number_field_tag :tie_amount, params[:tie_amount].present? ? params[:tie_amount] : 0,
+            class: 'form-control'
+          - if @errors[:tie_amount]
+            p.text-danger = t(".errors.number.#{@errors[:tie_amount]}")
+    .form-group.my-2
+      .row
+        .col-md-3
+          = label_tag :hat_amount, t('.hat_amount'), class: 'float-right'
+        .col-md-9
+          = number_field_tag "other[hat_amount]", params[:other].present? ? params[:other][:hat_amount] : 0,
+            class: 'form-control'
+          - if @errors[:hat_amount]
+            p.text-danger = t(".errors.number.#{@errors[:hat_amount]}")
+    .form-group.my-2.text-center
+      = submit_tag t('.submit'), class: 'btn btn-primary float-right'
+  .col-md-4.text-center.border.border-info
+    b = t('.price_table')
+    p = t('.white_shirt_price', price: number_to_currency(Settings.exercise_3.white_shirt_price, unit: 'VND/product'))
+    p = t('.tie_price', price: number_to_currency(Settings.exercise_3.tie_price, unit: 'VND/product'))
+    - Settings.exercise_3.other.keys.each do |k|
+      p = t(".other.#{k}", price: number_to_currency(Settings.exercise_3.other[k], unit: 'VND/product'))
+br
+b = t('.discount_percent', percent: number_to_currency(@discount_percent, unit: '%'))
+br
+b = t('.discount_price', discount_price: number_to_currency(@discount_price, unit: 'VND'))
+br
+b = t('.total_price', price: number_to_currency(@total_price, unit: 'VND'))
