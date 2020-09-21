@@ -4,24 +4,26 @@ module Exercise3
       @white_shirt_amount = params_permit[:white_shirt_amount]
       @tie_amount = params_permit[:tie_amount]
       @other = params_permit[:other]
-      @errors = {}
-      @total_price = 0
-      @discount_price = 0
-      @discount_percent = 0
+      @data = {
+        errors: {},
+        total_price: 0,
+        discount_price: 0,
+        discount_percent: 0
+      }
     end
 
     def perform
-      return data(true) if @white_shirt_amount.blank? && @tie_amount.blank? && !@other.present?
+      return @data if @white_shirt_amount.blank? && @tie_amount.blank? && @other.blank?
 
       @validation = Settings.validations.number
       @settings = Settings.exercise_3
       validate_params
-      return data(false) if @errors.present?
+      return @data if @data[:errors].present?
 
       calculate_discount_percent
       calculate_discount_price
       calculate_total_price
-      data(true)
+      @data
     end
 
     private
@@ -37,21 +39,21 @@ module Exercise3
     def validate_input_number(input, field)
       return input.to_i if input.to_s.match?(@validation)
 
-      @errors.merge!(field => :invalid)
+      @data[:errors].merge!(field => :invalid)
     end
 
     def calculate_discount_percent
-      @discount_percent += @settings.discount_7 if (@white_shirt_amount + @tie_amount + other_amount) >= 7
+      @data[:discount_percent] += @settings.discount_7 if (@white_shirt_amount + @tie_amount + other_amount) >= 7
 
-      @discount_percent += @settings.discount_5 if @white_shirt_amount.positive? && @tie_amount.positive?
+      @data[:discount_percent] += @settings.discount_5 if @white_shirt_amount.positive? && @tie_amount.positive?
     end
 
     def calculate_discount_price
-      @discount_price = (total * @discount_percent.to_f / 100).round(1)
+      @data[:discount_price] = (total * @data[:discount_percent].to_f / 100).round(1)
     end
 
     def calculate_total_price
-      @total_price = total - @discount_price
+      @data[:total_price] = total - @data[:discount_price]
     end
 
     def total
@@ -70,16 +72,6 @@ module Exercise3
 
     def other_amount
       @other.values.map(&:to_i).inject(&:+)
-    end
-
-    def data(status)
-      OpenStruct.new(
-        success?: status,
-        discount_percent: @discount_percent,
-        total_price: @total_price,
-        discount_price: @discount_price,
-        errors: @errors
-      )
     end
   end
 end
