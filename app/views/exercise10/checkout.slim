@@ -1,0 +1,65 @@
+- provide(:title, t('.title'))
+- provide(:thread, :exercise10)
+
+.row
+  .col-md-6.offset-md-2
+    = form_tag(exercise10_checkout_path, method: :post)
+      .form-group.required
+        = label_tag :rank, t('.rank'), class: 'control-label'
+        = select_tag :rank, options_for_select(ranks_select_options, params[:rank]), class: 'form-control'
+        - if @errors && @errors[:rank]
+          p.text-danger = t(".errors.rank.#{@errors[:total_amount]}")
+      br
+      .form-group.required
+        = label_tag :total_amount, t('.total_amount'), class: 'control-label'
+        = number_field_tag :total_amount, params[:total_amount], class: 'form-control', min: 0, required: true
+        - if @errors && @errors[:total_amount]
+          p.text-danger = t(".errors.total_amount.#{@errors[:total_amount]}")
+
+      br
+      .form-group.checkbox-give-coupon
+        - if amount_in_range_get_coupon?(params[:total_amount].to_i)
+          = check_box_tag :give_coupon, 1, params[:give_coupon] == '1', class: 'form-check-input'
+          = label_tag :total_amount, t('.have_give_coupon'), class: 'ml-2'
+      br
+      .row
+        .col-md-2
+          = submit_tag t('.btn_checkout'), class: 'btn btn-info'
+        - if @response&.success?
+          .col-md-8.offset-md-2.float-right
+            h4 = t('.checkout_title')
+            hr
+            table.table.table-borderless
+              tbody
+                tr
+                  td = t('.total_amount')
+                  td
+                    strong = number_to_currency(params[:total_amount])
+                tr
+                  td = t('.discount_percent')
+                  td
+                    strong = number_to_percentage(@response.discount_percent, precision: 0)
+                tr
+                  td = t('.discount_amount')
+                  td
+                    strong = number_to_currency(@response.discount_amount)
+                tr
+                  td = t('.total')
+                  td style="color: red;"
+                    strong = number_to_currency(@response.total_amount)
+            hr
+            - if @coupon
+              strong = t('.coupon_infor', coupon: @coupon)
+
+javascript:
+  $('body').on('keyup', '#total_amount', function() {
+    var total_amount = Number($(this).val());
+    var range_get_coupon = #{{ Settings.exercise10.range_get_coupon }}
+    if (range_get_coupon.includes(total_amount)) {
+      $('.checkbox-give-coupon').children().remove();
+      $('.checkbox-give-coupon').append('<input type="checkbox" name="give_coupon" id="give_coupon" value="1" class="form-check-input" />');
+      $('.checkbox-give-coupon').append('<label class="ml-2" for="total_amount">Do you want to give a coupon?</label>');
+    } else {
+      $('.checkbox-give-coupon').children().remove();
+    }
+  });

@@ -14,6 +14,7 @@ en:
       exercise4: Exercise 4
       exercise5: Exercise 5
       exercise6: Exercise 6
+      exercise10: Exercise 10
     thread:
       exercise1: |
         Giá bia bán tại "Bia hơi Keangnam" sẽ thay đổi theo các điều kiện ghi dưới đây:
@@ -57,6 +58,31 @@ en:
         ①：Trường hợp tổng số tiền mua sắm từ 2,000円/yên trở lên, miễn phí phí gửi xe trong 60 phút.
         ②：Trường hợp tổng số tiền mua sắm từ 5,000円/yên trở lên, miễn phí gửi xe trong 120 phút.
         ③：Nếu khách hàng có xem phim, miễn phí gửi xe thêm 180 phút, cộng bổ sung vào cùng với tổng số tiền mua sắm.
+      exercise10: |
+        Tại nhà hàng Nam Từ Liêm đang áp dụng chế độ hội viên hình thức thẻ prepaid card.
+        ---
+        ●Điều kiện tiên quyết：
+        ①：Thứ hạng của hội viên được chia thành 3 cấp ứng với số lần sử dụng nhà hàng.
+        ②：Tuỳ theo số tiền thanh toán trên thẻ prepaid card, các bonus đặc quyền thanh toán với tỷ lệ khác nhau sẽ được cấp cho hội viên.
+        ③：Thứ hạng hội viên và điều kiện cấp bonus đặc quyền theo như bên dưới:
+
+        <strong>Hạng bạc	Bonus</strong>
+        Số tiền thanh toán 3,000円/ yên	Giảm 1%
+        Số tiền thanh toán 5,000円/yên	Giảm 2%
+        Số tiền thanh toán 10,000円/yên	Giảm 4%
+
+        <strong>Hạng vàng 	Bonus</strong>
+        Số tiền thanh toán 3,000円/ yên	Giảm 3%
+        Số tiền thanh toán 5,000円/yên	Giảm 5%
+        Số tiền thanh toán 10,000円/yên	Giảm 10%
+
+        <strong>Hạng đen	Bonus</strong>
+        Số tiền thanh toán 3,000円/ yên	Giảm 5%
+        Số tiền thanh toán 5,000円/yên	Giảm 7%
+        Số tiền thanh toán 10,000円/yên	Giảm 15%
+
+        ④：Mỗi lần có thanh toán 5,000 hoặc 10,000円/yên, sẽ có 1 lần bốc thăm
+        Theo 1 tỷ lệ nhất định sẽ có trúng giải và phát hành coupon giảm giá.
   exercise1:
     index:
       title: 'Exercise 1'
@@ -115,3 +141,20 @@ en:
       errors:
         amount:
           invalid: Amount must be a positive integer!
+  exercise10:
+    checkout:
+      title: 'Exercise 10'
+      rank: 'Rank'
+      total_amount: 'Total Amount'
+      have_give_coupon: 'Do you want to give a coupon?'
+      btn_checkout: 'Checkout'
+      checkout_title: 'Order Infor'
+      discount_percent: 'Discount Percent'
+      discount_amount: 'Discount Amount'
+      total: 'Total'
+      coupon_infor: 'Your coupon is %{coupon}'
+      errors:
+        total_amount:
+          invalid: Total amount is invalid
+        rank:
+          invalid: Rank is invalid
