@@ -28,7 +28,7 @@ RSpec.describe Exercise7Controller, type: :controller do
           context 'when have fast_delivery' do
             let(:fast_delivery) { '1' }
 
-            it { expect(assigns(:delivery_fee).to eq 1000) }
+            it { expect(assigns(:delivery_fee)).to eq 1000 }
           end
         end
 
@@ -119,14 +119,14 @@ RSpec.describe Exercise7Controller, type: :controller do
     end
 
     context 'when params is invalid' do
-      share_examples 'invalid params' do |param|
+      shared_examples 'invalid params' do |param|
         it do
           expect(assigns(:delivery_fee)).to eq 0
           expect(assigns(:errors)[param]).to eq :invalid
         end
       end
 
-      context 'when total_amount is negative number'
+      context 'when total_amount is negative number' do
         let(:params) do
           {
             premium: '1',
