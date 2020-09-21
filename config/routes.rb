@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :exercise1, only: :index
   resources :exercise2, only: [:new, :create]
+  resources :exercise3, only: :index
   resources :exercise4, only: :index
   resources :exercise5, only: :index
   resources :exercise7, only: :index
@@ -10,5 +11,6 @@ Rails.application.routes.draw do
 
   get "/exercise6", to: "exercise6#free_parking_time"
   post "/exercise6", to: "exercise6#calculate_free_parking_time"
-  resources :exercise3, only: :index
+  get "exercise10/checkout" => "exercise10#checkout"
+  post "exercise10/checkout" => "exercise10#checkout"
 end

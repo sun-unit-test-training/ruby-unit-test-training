@@ -38,3 +38,24 @@ exercise_6:
   level_1_free_parking_time: 60 # minutes
   level_2_free_parking_time: 120 # minutes
   extra_free_parking_time_for_movie: 180 # minutes
+exercise10:
+  range_get_coupon:
+    - 5000
+    - 10000
+  ranks:
+    - silver
+    - gold
+    - platinum
+  rank_bonuses:
+    silver:
+      3000: 1
+      5000: 2
+      10000: 4
+    gold:
+      3000: 3
+      5000: 5
+      10000: 10
+    platinum:
+      3000: 5
+      5000: 7
+      10000: 15

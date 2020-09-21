@@ -15,6 +15,7 @@ en:
       exercise5: Exercise 5
       exercise6: Exercise 6
       exercise7: Exercise 7
+      exercise10: Exercise 10
     thread:
       exercise1: |
         Giá bia bán tại "Bia hơi Keangnam" sẽ thay đổi theo các điều kiện ghi dưới đây:
@@ -68,6 +69,31 @@ en:
         ④：Với các thành viên premium, bất kể số tiền mua hàng là bao nhiêu cũng được miễn phí vận chuyển thông thường.
         Trường hợp chọn "Giao hàng siêu tốc", được miễn phí vận chuyển thông thường nhưng bị tính thêm phí vận chuyển siêu tốc.
         ⑤：Phí vận chuyển được tính là tổng của phí vận chuyển thông thường và phí vận chuyển siêu tốc.
+      exercise10: |
+        Tại nhà hàng Nam Từ Liêm đang áp dụng chế độ hội viên hình thức thẻ prepaid card.
+        ---
+        ●Điều kiện tiên quyết：
+        ①：Thứ hạng của hội viên được chia thành 3 cấp ứng với số lần sử dụng nhà hàng.
+        ②：Tuỳ theo số tiền thanh toán trên thẻ prepaid card, các bonus đặc quyền thanh toán với tỷ lệ khác nhau sẽ được cấp cho hội viên.
+        ③：Thứ hạng hội viên và điều kiện cấp bonus đặc quyền theo như bên dưới:
+
+        <strong>Hạng bạc	Bonus</strong>
+        Số tiền thanh toán 3,000円/ yên	Giảm 1%
+        Số tiền thanh toán 5,000円/yên	Giảm 2%
+        Số tiền thanh toán 10,000円/yên	Giảm 4%
+
+        <strong>Hạng vàng 	Bonus</strong>
+        Số tiền thanh toán 3,000円/ yên	Giảm 3%
+        Số tiền thanh toán 5,000円/yên	Giảm 5%
+        Số tiền thanh toán 10,000円/yên	Giảm 10%
+
+        <strong>Hạng đen	Bonus</strong>
+        Số tiền thanh toán 3,000円/ yên	Giảm 5%
+        Số tiền thanh toán 5,000円/yên	Giảm 7%
+        Số tiền thanh toán 10,000円/yên	Giảm 15%
+
+        ④：Mỗi lần có thanh toán 5,000 hoặc 10,000円/yên, sẽ có 1 lần bốc thăm
+        Theo 1 tỷ lệ nhất định sẽ có trúng giải và phát hành coupon giảm giá.
   exercise1:
     index:
       title: 'Exercise 1'
@@ -139,3 +165,20 @@ en:
           invalid: Fast delivery checkbox value is invalid
         premium:
           invalid: Premium checkbox value is invalid
+  exercise10:
+    checkout:
+      title: 'Exercise 10'
+      rank: 'Rank'
+      total_amount: 'Total Amount'
+      have_give_coupon: 'Do you want to give a coupon?'
+      btn_checkout: 'Checkout'
+      checkout_title: 'Order Infor'
+      discount_percent: 'Discount Percent'
+      discount_amount: 'Discount Amount'
+      total: 'Total'
+      coupon_infor: 'Your coupon is %{coupon}'
+      errors:
+        total_amount:
+          invalid: Total amount is invalid
+        rank:
+          invalid: Rank is invalid

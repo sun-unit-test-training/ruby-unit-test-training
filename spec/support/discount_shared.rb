@@ -2,9 +2,9 @@ shared_examples "do not discount" do |total_amount|
   let(:total_amount) { total_amount }
 
   it do
-    expect(assigns(:total_amount)).to eq total_amount
-    expect(assigns(:discount_percent)).to eq 0
-    expect(assigns(:discount_amount)).to eq 0
+    expect(assigns(:response).total_amount).to eq total_amount
+    expect(assigns(:response).discount_percent).to eq 0
+    expect(assigns(:response).discount_amount).to eq 0
   end
 end
 
