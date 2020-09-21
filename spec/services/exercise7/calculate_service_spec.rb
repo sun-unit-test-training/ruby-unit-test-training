@@ -78,7 +78,7 @@ RSpec.describe Exercise7::CalculateService, type: :service do
     describe 'calculate logic' do
       let(:args) { [total_amount, fast_delivery, premium] }
 
-      share_examples 'calculate logic tests' do |premium, total_amount, fast_delivery, normal_delivery_price, fast_delivery_price, delivery_fee|
+      shared_examples 'calculate logic tests' do |premium, total_amount, fast_delivery, normal_delivery_price, fast_delivery_price, delivery_fee|
         it do
           response = service.perform
           expect(service.instance_values['premium']).to eq premium
