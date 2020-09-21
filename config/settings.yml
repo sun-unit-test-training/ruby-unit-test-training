@@ -32,6 +32,8 @@ exercise_3:
   tie_price: 70_000 # vnd
   other:
     hat_price: 10_000 # vnd
+  discount_5: 5
+  discount_7: 7
 
 exercise_6:
   discount_level_1: 2000 # yen
