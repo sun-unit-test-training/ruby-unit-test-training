@@ -262,7 +262,7 @@ RSpec.describe Exercise3Controller, type: :controller do
         end
       end
 
-      context 'buy only tie'
+      context 'buy only tie' do
         context 'with total amount = 7' do
           let(:params) do
             {
