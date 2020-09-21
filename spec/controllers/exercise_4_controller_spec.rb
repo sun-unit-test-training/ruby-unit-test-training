@@ -53,7 +53,7 @@ RSpec.describe Exercise4Controller, type: :controller do
     end
 
     context 'when params is nil' do
-      let(:params) {{ day_in_month: nil }}
+      let(:params) {{}}
       it { expect(assigns(:errors)).to eq ({}) }
     end
   end
