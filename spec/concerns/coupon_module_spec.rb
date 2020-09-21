@@ -9,7 +9,7 @@ RSpec.describe CouponModule, type: :controller do
     def index
       @coupon = given_coupon(params[:total_amount].to_i, params[:give_coupon])
 
-      render nothing: true
+      redirect_to '/fake_url'
     end
   end
 
