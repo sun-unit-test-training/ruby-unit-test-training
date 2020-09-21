@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Exercise4Controller, type: :controller do
   describe '#index' do
+    let(:error) {{}}
+
     before { get :index, params: params }
 
     shared_examples 'calendar color' do
@@ -17,7 +19,6 @@ RSpec.describe Exercise4Controller, type: :controller do
       context 'and day_in_month is sunday' do
         let(:day_in_month) { "2020-9-27" }
         let(:calendar_color) {{ 27=>"red" }}
-        let(:error) {{}}
 
         include_examples 'calendar color', :calendar_color, :error
       end
@@ -25,7 +26,6 @@ RSpec.describe Exercise4Controller, type: :controller do
       context 'and day_in_month is saturday' do
         let(:day_in_month) { "2020-9-05" }
         let(:calendar_color) {{ 5=>"red" }}
-        let(:error) {{}}
 
         include_examples 'calendar color', :calendar_color, :error
       end
@@ -33,7 +33,6 @@ RSpec.describe Exercise4Controller, type: :controller do
       context 'when day_in_month is normal day' do
         let(:day_in_month) { "2020-9-02" }
         let(:calendar_color) {{ 2=>"red" }}
-        let(:error) {{}}
 
         include_examples 'calendar color', :calendar_color, :error
       end
@@ -42,7 +41,6 @@ RSpec.describe Exercise4Controller, type: :controller do
     context 'when day_in_month is satuday' do
       let(:day_in_month) {"2020-9-12" }
       let(:calendar_color) {{ 12=>"blue" }}
-      let(:error) {{}}
 
       include_examples 'calendar color', :calendar_color, :error
     end
@@ -50,7 +48,6 @@ RSpec.describe Exercise4Controller, type: :controller do
     context 'when day_in_month is sunday' do
       let(:day_in_month) { "2020-9-20" }
       let(:calendar_color) {{ 20=>"red" }}
-      let(:error) {{}}
 
       include_examples 'calendar color', :calendar_color, :error
     end
@@ -58,7 +55,6 @@ RSpec.describe Exercise4Controller, type: :controller do
     context 'when day_in_month is normal day' do
       let(:day_in_month) { "2020-9-10" }
       let(:calendar_color) {{ 10=>"black" }}
-      let(:error) {{}}
 
       include_examples 'calendar color', :calendar_color, :error
     end
@@ -75,8 +71,8 @@ RSpec.describe Exercise4Controller, type: :controller do
       let(:params) { nil }
 
       it do
-        expect(assigns(:choose_day)).to eq ({})
-        expect(assigns(:errors)).to eq ({})
+        expect(assigns(:choose_day)).to be_empty
+        expect(assigns(:errors)).to be_empty
       end
     end
   end
