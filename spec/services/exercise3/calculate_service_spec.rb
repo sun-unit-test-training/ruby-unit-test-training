@@ -229,7 +229,7 @@ RSpec.describe Exercise3::CalculateService, type: :service do
           it_behaves_like 'Ex3 applied discount', [1_302_000.0, 98_000.0, 7]
         end
 
-        context 'with total amount = 7' do
+        context 'with total amount > 7' do
           let(:white_shirt_amount) { 8 }
           let(:tie_amount) { 0 }
           let(:hat_amount) { 0 }
@@ -317,9 +317,9 @@ RSpec.describe Exercise3::CalculateService, type: :service do
         end
 
         context 'all input is empty' do
-          let(:white_shirt_amount) { 0 }
-          let(:tie_amount) { 0 }
-          let(:hat_amount) { 0 }
+          let(:white_shirt_amount) { "" }
+          let(:tie_amount) { "" }
+          let(:hat_amount) { "" }
           it_behaves_like 'expect instance value of service'
           # discount 0 %
           it_behaves_like 'Ex3 not applied discount', 0
