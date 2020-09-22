@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Exercise8Controller, type: :controller do
   describe '#index' do
     # freeze current time is Monday
-    before { Timecop.freeze('2020-09-21 01:00:00') }
-    after { Timecop.return }
+    before(:all) { travel_to('2020-09-21 01:00:00') }
+    after(:all) { travel_back }
 
     let(:params) do
       {
