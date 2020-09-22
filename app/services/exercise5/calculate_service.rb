@@ -46,7 +46,7 @@ module Exercise5
     end
 
     def calculate_promotion
-      @promotion.push(I18n.t('exercise5.bonus_french_fries')) if total_bill >= settings.min_bill_for_discount
+      @promotion.push(I18n.t('exercise5.bonus_french_fries')) if total_bill > settings.min_bill_for_discount
       @promotion.push(I18n.t('exercise5.bonus_pizza')) if pickup_at_store
     end
   end

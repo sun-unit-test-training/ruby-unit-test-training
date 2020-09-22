@@ -1,0 +1,36 @@
+- provide(:title, t('.title'))
+- provide(:thread, :exercise9)
+
+= form_tag :exercise9_index, method: :get, class: 'form-inline' do
+  .form-group.my-2
+    .row
+      .col-md-5
+        = label_tag :magic_wand, t('.magic_wand'), class: 'float-right'
+      .col-md-2
+        = select_tag :magic_wand, options_for_select(t(".select_options"), params[:magic_wand]),
+          include_blank: t('.inviting_you_to_choose'), class: 'form-control option-align-center'
+  .form-group.my-2
+    .row
+      .col-md-5
+        = label_tag :companion_mage, t('.companion_mage'), class: 'float-right'
+      .col-md-2
+        = select_tag :companion_mage, options_for_select(t(".select_options"), params[:companion_mage]),
+          include_blank: t('.inviting_you_to_choose'), class: 'form-control option-align-center'
+  .form-group.my-2
+    .row
+      .col-md-5
+        = label_tag :dark_key, t('.dark_key'), class: 'float-right'
+      .col-md-2
+        = select_tag :dark_key, options_for_select(t(".select_options"), params[:dark_key]),
+          include_blank: t('.inviting_you_to_choose'), class: 'form-control option-align-center'
+  .form-group.my-2
+    .row
+      .col-md-5
+        = label_tag :light_sword, t('.light_sword'), class: 'float-right'
+      .col-md-2
+        = select_tag :light_sword, options_for_select(t(".select_options"), params[:light_sword]),
+          include_blank: t('.inviting_you_to_choose'), class: 'form-control option-align-center'
+  .form-group.my-2
+    = submit_tag t('.submit'), class: 'btn btn-primary float-right'
+br
+p.text-center = @result
