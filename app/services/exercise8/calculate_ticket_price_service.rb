@@ -1,5 +1,10 @@
 module Exercise8
   class CalculateTicketPriceService
+    module Gender
+      FEMALE = 0
+      MALE = 1
+    end
+
     def initialize(params_permit = {})
       @age = params_permit[:age]
       @gender = params_permit[:gender]
@@ -11,18 +16,20 @@ module Exercise8
     end
 
     def perform
-      return @data if @age.blank? || @gender.blank? || @ticket_booking_day.blank?
+      return data if age.blank? || gender.blank? || ticket_booking_day.blank?
 
       @validations = Settings.validations
       @settings = Settings.exercise_8
       validate_params
-      return @data if @data[:errors].present?
+      return data if data[:errors].present?
 
       calculate
-      @data
+      data
     end
 
     private
+
+    attr_reader :age, :gender, :ticket_booking_day, :validations, :settings, :data
 
     def validate_params
       validate_age
@@ -31,9 +38,9 @@ module Exercise8
     end
 
     def calculate
-      if @ticket_booking_day.tuesday?
+      @data[:ticket_price] = if ticket_booking_day.tuesday?
         price_in_tuesday
-      elsif @ticket_booking_day.friday?
+      elsif ticket_booking_day.friday?
         price_in_friday
       else
         price_in_other_day
@@ -41,65 +48,66 @@ module Exercise8
     end
 
     def price_in_tuesday
-      @data[:ticket_price] = @settings.badminton_fee_1200
+      settings.badminton_fee_1200
     end
 
     def price_in_friday
-      case @age
+      case age
       when (0..12)
-        @data[:ticket_price] = @settings.badminton_fee_basic / 2
+        settings.badminton_fee_basic / 2
       when (13..64)
-        @data[:ticket_price] = @settings.badminton_fee_basic if male?
-        @data[:ticket_price] = @settings.badminton_fee_1400 if female?
+        return settings.badminton_fee_1400 if female?
+
+        settings.badminton_fee_basic
       else
-        @data[:ticket_price] = @settings.badminton_fee_1600 if male?
-        @data[:ticket_price] = @settings.badminton_fee_1400 if female?
+        return settings.badminton_fee_1400 if female?
+
+        settings.badminton_fee_1600
       end
     end
 
     def price_in_other_day
-      @data[:ticket_price] = case @age
-                             when (0..12)
-                               @settings.badminton_fee_basic / 2
-                             when (13..64)
-                               @settings.badminton_fee_basic
-                             else
-                               @settings.badminton_fee_1600
+      case age
+      when (0..12)
+        settings.badminton_fee_basic / 2
+      when (13..64)
+        settings.badminton_fee_basic
+      else
+        settings.badminton_fee_1600
       end
     end
 
     def validate_age
-      if @age.to_s.match?(@validations.number)
-        @age = @age.to_i
-        @data[:errors].merge!(age: :invalid) if @age.negative? || @age > 120
+      if age.to_s.match?(validations.number) && age.to_i >= 0 && age.to_i <= 120
+        @age = age.to_i
       else
-        @data[:errors].merge!(age: :invalid)
+        data[:errors].merge!(age: :invalid)
       end
     end
 
     def validate_gender
-      if @validations.gender.include?(@gender)
-        @gender = @gender.to_i
+      if validations.gender.include?(gender)
+        @gender = gender.to_i
       else
-        @data[:errors].merge!(gender: :invalid)
+        data[:errors].merge!(gender: :invalid)
       end
     end
 
     def validate_booking_day
-      if @ticket_booking_day.to_s.match?(@validations.date)
-        @ticket_booking_day = Time.zone.parse(@ticket_booking_day.to_s)
-        @data[:errors].merge!(ticket_booking_day: :invalid) if @ticket_booking_day < Time.now
+      if ticket_booking_day.to_s.match?(validations.date)
+        @ticket_booking_day = Time.zone.parse(ticket_booking_day.to_s)
+        check_invalid_time
       else
-        @data[:errors].merge!(ticket_booking_day: :invalid)
+        data[:errors].merge!(ticket_booking_day: :invalid)
       end
     end
 
-    def male?
-      @gender == 1
+    def check_invalid_time
+      data[:errors].merge!(ticket_booking_day: :invalid) if ticket_booking_day < Time.now
     end
 
     def female?
-      @gender.zero?
+      gender == Gender::FEMALE
     end
   end
 end
