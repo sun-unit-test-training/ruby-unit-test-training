@@ -17,7 +17,10 @@ RSpec.describe Exercise9Controller do
         }
       end
 
-      it { expect(assigns(:result)).to eq not_find_room }
+      it do
+        get :index, params: params
+        expect(assigns(:result)).to eq not_find_room
+      end
     end
 
     shared_examples 'find room with magic_wand' do
@@ -30,7 +33,10 @@ RSpec.describe Exercise9Controller do
         }
       end
 
-      it { expect(assigns(:result)).to eq finded_room }
+      it do
+        get :index, params: params
+        expect(assigns(:result)).to eq finded_room
+      end
     end
 
     shared_examples 'find room with companion_mage' do
@@ -43,7 +49,10 @@ RSpec.describe Exercise9Controller do
         }
       end
 
-      it { expect(assigns(:result)).to eq finded_room }
+      it do
+        get :index, params: params
+        expect(assigns(:result)).to eq finded_room
+      end
     end
 
     shared_examples 'go into the room' do
@@ -56,7 +65,10 @@ RSpec.describe Exercise9Controller do
         }
       end
 
-      it { expect(assigns(:result)).to eq go_into_the_room }
+      it do
+        get :index, params: params
+        expect(assigns(:result)).to eq go_into_the_room
+      end
     end
 
     shared_examples 'defeat bigboss' do
@@ -69,10 +81,30 @@ RSpec.describe Exercise9Controller do
         }
       end
 
-      it { expect(assigns(:result)).to eq defeat_bigboss }
+      it do
+        get :index, params: params
+        expect(assigns(:result)).to eq defeat_bigboss
+      end
     end
 
-    before { get :index, params: params }
+    before :all do
+      Settings.exercise_9.not_find_room.to_h.each do |_, value|
+        create :hanoi_quest, key_result: value,
+                             result: I18n.t('exercise9.index.not_find_room')
+      end
+      Settings.exercise_9.finded_room.to_h.each do |_, value|
+        create :hanoi_quest, key_result: value,
+                             result: I18n.t('exercise9.index.finded_room')
+      end
+      Settings.exercise_9.go_into_the_room.to_h.each do |_, value|
+        create :hanoi_quest, key_result: value,
+                             result: I18n.t('exercise9.index.go_into_the_room')
+      end
+      Settings.exercise_9.defeat_bigboss.to_h.each do |_, value|
+        create :hanoi_quest, key_result: value,
+                             result: I18n.t('exercise9.index.defeat_bigboss')
+      end
+    end
 
     context 'when not find room' do
       context 'and have not magic_wand, companion_mage' do
@@ -197,6 +229,17 @@ RSpec.describe Exercise9Controller do
           let(:dark_key) { '1' }
           include_examples 'defeat bigboss'
         end
+      end
+    end
+
+    context 'when not existed HanoiQuest data' do
+      let(:params) { {} }
+
+      before { HanoiQuest.destroy_all }
+
+      it do
+        get :index, params: params
+        expect(assigns(:result)).to be_nil
       end
     end
   end

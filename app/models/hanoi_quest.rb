@@ -1,0 +1,2 @@
+class HanoiQuest < ApplicationRecord
+end
