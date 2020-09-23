@@ -89,7 +89,7 @@ RSpec.describe Exercise4::CalendarService do
     context "#response" do
       subject {described_class.new(day_in_month).send :response}
 
-      context "and day_in_month is correct format" do
+      context "when day_in_month is incorrect format" do
         let(:day_in_month) { "2020-12nnn-22" }
 
         it do
@@ -99,7 +99,7 @@ RSpec.describe Exercise4::CalendarService do
         end
       end
 
-      context "and day_in_month is correct format" do
+      context "when day_in_month is nil" do
         let(:day_in_month) { nil }
 
         it do
