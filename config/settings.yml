@@ -2,6 +2,7 @@ validations:
   number: !ruby/regexp /\A\d*\z/
   time: !ruby/regexp /\A(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]\z/
   date: !ruby/regexp /\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/
+  gender: [1, 0, '1', '0']
 
 exercise_1:
   price_per_cup: 490 # yen
@@ -46,6 +47,13 @@ exercise_6:
   level_1_free_parking_time: 60 # minutes
   level_2_free_parking_time: 120 # minutes
   extra_free_parking_time_for_movie: 180 # minutes
+
+exercise_8:
+  badminton_fee_1200: 1200
+  badminton_fee_1400: 1400
+  badminton_fee_1600: 1600
+  badminton_fee_basic: 1800
+
 exercise10:
   range_get_coupon:
     - 5000

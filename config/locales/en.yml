@@ -16,6 +16,7 @@ en:
       exercise5: Exercise 5
       exercise6: Exercise 6
       exercise7: Exercise 7
+      exercise8: Exercise 8
       exercise10: Exercise 10
       exercise9: Exercise 9
     thread:
@@ -82,6 +83,25 @@ en:
         ④：Với các thành viên premium, bất kể số tiền mua hàng là bao nhiêu cũng được miễn phí vận chuyển thông thường.
         Trường hợp chọn "Giao hàng siêu tốc", được miễn phí vận chuyển thông thường nhưng bị tính thêm phí vận chuyển siêu tốc.
         ⑤：Phí vận chuyển được tính là tổng của phí vận chuyển thông thường và phí vận chuyển siêu tốc.
+      exercise8: |
+        Mr. A đến một sân chơi nọ để chơi cầu lông.
+        ---
+        ●Điều kiện tiên quyết:
+        ①：Về cơ bản phí vào sân là 1800 円/yên
+        ②：Trẻ em chưa đủ 13 tuổi, phí vào sân tính bằng nửa giá.
+        ③：Người trên 65 tuổi, phí vào sân là 1600 円/yên
+        ④：Chị em phụ nữ sử dụng dịch vụ vào thứ 6, phí vào sân là 1400 円/yên
+        ⑤：Không phân biệt giới tính, tuổi tác, người sử dụng dịch vụ vào thứ 3, phí vào sân là 1200 円/yên
+        ●Những điều kiện khác:
+        ・Độ tuổi của người dùng là "tối thiểu 0 tuổi, tối đa là 120 tuổi". Nếu không nằm trong phạm vi đó thì đó được coi là "Error".
+        ・Nếu các điều kiện giảm giá phí vào sân bị trùng nhau, ưu tiên chọn mức phí rẻ nhất.
+      exercise9: |
+        Trong Roll Playng Game "Hanoi quest", để dũng sĩ Bánh Mì có thể đánh 「Big Boss」hùng mạnh, cần phải hoàn thành rất nhiều điều kiện.
+        ---
+        ●Điều kiện tiên quyết：
+        ①：Để tìm được căn phòng nơi có Big Boss, cần mang theo công cụ là "Đũa phép" hoặc là cần có "Quân sư" làm bạn đồng hành
+        ②：Khi vào trong phòng có Big Boss , cần mang theo công cụ là "Chìa khoá bóng đêm".
+        ③：Để đánh bại Big Boss, dũng sĩ Bánh Mì cần phải mang theo vũ khí là "Kiếm ánh sáng"
       exercise10: |
         Tại nhà hàng Nam Từ Liêm đang áp dụng chế độ hội viên hình thức thẻ prepaid card.
         ---
@@ -107,13 +127,6 @@ en:
 
         ④：Mỗi lần có thanh toán 5,000 hoặc 10,000円/yên, sẽ có 1 lần bốc thăm
         Theo 1 tỷ lệ nhất định sẽ có trúng giải và phát hành coupon giảm giá.
-      exercise9: |
-        Trong Roll Playng Game "Hanoi quest", để dũng sĩ Bánh Mì có thể đánh 「Big Boss」hùng mạnh, cần phải hoàn thành rất nhiều điều kiện.
-        ---
-        ●Điều kiện tiên quyết：
-        ①：Để tìm được căn phòng nơi có Big Boss, cần mang theo công cụ là "Đũa phép" hoặc là cần có "Quân sư" làm bạn đồng hành
-        ②：Khi vào trong phòng có Big Boss , cần mang theo công cụ là "Chìa khoá bóng đêm".
-        ③：Để đánh bại Big Boss, dũng sĩ Bánh Mì cần phải mang theo vũ khí là "Kiếm ánh sáng"
   exercise1:
     index:
       title: 'Exercise 1'
@@ -203,23 +216,23 @@ en:
           invalid: Fast delivery checkbox value is invalid
         premium:
           invalid: Premium checkbox value is invalid
-  exercise10:
-    checkout:
-      title: 'Exercise 10'
-      rank: 'Rank'
-      total_amount: 'Total Amount'
-      have_give_coupon: 'Do you want to give a coupon?'
-      btn_checkout: 'Checkout'
-      checkout_title: 'Order Infor'
-      discount_percent: 'Discount Percent'
-      discount_amount: 'Discount Amount'
-      total: 'Total'
-      coupon_infor: 'Your coupon is %{coupon}'
+  exercise8:
+    index:
+      title: 'Exercise 8'
+      submit: 'Submit'
+      age: 'Age'
+      gender: 'Gender'
+      male: 'Male'
+      female: 'Female'
+      ticket_booking_day: 'Ticket Booking Day'
+      ticket_price: 'Ticket Price: %{price}'
       errors:
-        total_amount:
-          invalid: Total amount is invalid
-        rank:
-          invalid: Rank is invalid
+        age:
+          invalid: You need to input integer and in 0 to 120
+        gender:
+          invalid: Gender invalid
+        ticket_booking_day:
+          invalid: Booking day must greater than current time
   exercise9:
     index:
       title: Bài 9
@@ -240,3 +253,20 @@ en:
         -
           - Không
           - 0
+  exercise10:
+    checkout:
+      title: 'Exercise 10'
+      rank: 'Rank'
+      total_amount: 'Total Amount'
+      have_give_coupon: 'Do you want to give a coupon?'
+      btn_checkout: 'Checkout'
+      checkout_title: 'Order Infor'
+      discount_percent: 'Discount Percent'
+      discount_amount: 'Discount Amount'
+      total: 'Total'
+      coupon_infor: 'Your coupon is %{coupon}'
+      errors:
+        total_amount:
+          invalid: Total amount is invalid
+        rank:
+          invalid: Rank is invalid

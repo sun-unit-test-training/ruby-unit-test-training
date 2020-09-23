@@ -1,0 +1,34 @@
+- provide(:title, t('.title'))
+- provide(:thread, :exercise8)
+
+= form_tag :exercise8_index, method: :get, class: 'form-inline' do
+  .form-group.my-2
+    .row
+      .col-md-3
+        = label_tag :age, t('.age'), class: 'float-right'
+      .col-md-9
+        = number_field_tag :age, params[:age], class: 'form-control', min: 0, required: true
+        - if @errors[:age]
+          p.text-danger = t(".errors.age.#{@errors[:age]}")
+  .form-group.my-2
+    .row
+      .col-md-3
+        = label_tag :gender, t('.gender'), class: 'float-right'
+      .col-md-2
+        = radio_button_tag :gender, 1, params[:gender] == '1' || true, class: 'form-check-input float-left'
+        = label_tag :gender, t('.male'), class: 'float-left'
+      .col-md-2
+        = radio_button_tag :gender, 0, params[:gender] == '0', class: 'form-check-input float-left'
+        = label_tag :gender, t('.female'), class: 'float-left'
+  .form-group.my-2
+    .row
+      .col-md-3
+        = label_tag :ticket_booking_day, t('.ticket_booking_day'), class: 'float-right'
+      .col-md-9
+        = datetime_field_tag :ticket_booking_day, params[:ticket_booking_day], class: 'form-control', required: true
+        - if @errors.present?
+          p.text-danger = t(".errors.ticket_booking_day.#{@errors[:ticket_booking_day]}")
+  .form-group.my-2
+    = submit_tag t('.submit'), class: 'btn btn-primary float-right'
+br
+p = t('.ticket_price', price: number_to_currency(@ticket_price, unit: '円'))
