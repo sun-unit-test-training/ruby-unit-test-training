@@ -26,7 +26,7 @@
         = label_tag :ticket_booking_day, t('.ticket_booking_day'), class: 'float-right'
       .col-md-9
         = datetime_field_tag :ticket_booking_day, params[:ticket_booking_day], class: 'form-control', required: true
-        - if @errors.present?
+        - if @errors[:ticket_booking_day]
           p.text-danger = t(".errors.ticket_booking_day.#{@errors[:ticket_booking_day]}")
   .form-group.my-2
     = submit_tag t('.submit'), class: 'btn btn-primary float-right'
