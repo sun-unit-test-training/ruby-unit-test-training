@@ -9,3 +9,6 @@
 
 * Check coverage result:
   - After running your tests, open `coverage/index.html` in the browser to view the detail report of coverage result
+
+* Init database for exercise 9:
+  - Run `bundle exec rake init_hanoi_quest_data:create` to setup database for exercise 9
