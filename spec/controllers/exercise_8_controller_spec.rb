@@ -8,20 +8,25 @@ RSpec.describe Exercise8Controller, type: :controller do
 
     let(:params) do
       {
-        age: age,
-        gender: gender,
-        ticket_booking_day: ticket_booking_day
+        age: age.to_s,
+        gender: gender.to_s,
+        ticket_booking_day: ticket_booking_day.to_s
       }
     end
+
     let(:service_stub) { double('Exercise8::CalculateTicketPriceService') }
 
-    before { get :index, params: params }
+    let(:action_controller_params) do
+      ActionController::Parameters.new(params).permit(:age, :gender, :ticket_booking_day)
+    end
+
+    before do
+      allow(Exercise8::CalculateTicketPriceService).to receive(:new).with(action_controller_params).and_return(service_stub)
+      allow(service_stub).to receive(:perform).and_return(data_stub)
+      get :index, params: params
+    end
 
     context 'when input data invalid' do
-      before do
-        allow(Exercise8::CalculateTicketPriceService).to receive(:new).with(params).and_return(service_stub)
-        allow(service_stub).to receive(:perform).and_return(data_stub)
-      end
       context 'age invalid' do
         let(:data_stub) do
           {
@@ -246,32 +251,40 @@ RSpec.describe Exercise8Controller, type: :controller do
         end
       end
 
-      context 'when age is empty' do
-        let(:age) { '' }
-        let(:gender) { 0 }
-        let(:ticket_booking_day) { Time.now.tomorrow }
-        it { expect(assigns(:ticket_price)).to eq 0 }
-      end
+      context 'When some parameters are empty' do
+        let(:data_stub) do
+          {
+            ticket_price: 0,
+            errors: {}
+          }
+        end
+        context 'when age is empty' do
+          let(:age) { '' }
+          let(:gender) { 0 }
+          let(:ticket_booking_day) { Time.now.tomorrow }
+          it { expect(assigns(:ticket_price)).to eq 0 }
+        end
 
-      context 'when gender is empty' do
-        let(:age) { 2 }
-        let(:gender) { '' }
-        let(:ticket_booking_day) { Time.now.tomorrow }
-        it { expect(assigns(:ticket_price)).to eq 0 }
-      end
+        context 'when gender is empty' do
+          let(:age) { 2 }
+          let(:gender) { '' }
+          let(:ticket_booking_day) { Time.now.tomorrow }
+          it { expect(assigns(:ticket_price)).to eq 0 }
+        end
 
-      context 'when ticket_booking_day is empty' do
-        let(:age) { 2 }
-        let(:gender) { '0' }
-        let(:ticket_booking_day) { '' }
-        it { expect(assigns(:ticket_price)).to eq 0 }
-      end
+        context 'when ticket_booking_day is empty' do
+          let(:age) { 2 }
+          let(:gender) { '0' }
+          let(:ticket_booking_day) { '' }
+          it { expect(assigns(:ticket_price)).to eq 0 }
+        end
 
-      context 'all input is empty' do
-        let(:age) { 2 }
-        let(:gender) { '' }
-        let(:ticket_booking_day) { '' }
-        it { expect(assigns(:ticket_price)).to eq 0 }
+        context 'all input is empty' do
+          let(:age) { 2 }
+          let(:gender) { '' }
+          let(:ticket_booking_day) { '' }
+          it { expect(assigns(:ticket_price)).to eq 0 }
+        end
       end
     end
   end
