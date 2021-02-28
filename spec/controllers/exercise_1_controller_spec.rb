@@ -2,129 +2,45 @@ require 'rails_helper'
 
 RSpec.describe Exercise1Controller, type: :controller do
   describe '#index' do
-    let(:time_formatted) { time.strftime('%H:%M') }
-    before { get :index, params: params }
-
-    context 'when drink without discount time' do
-      let(:time) { Time.current.change(hour: 19) }
+    context 'initialize Exercise1::CalculateService with correct params' do
       let(:params) do
         {
-          number_of_cup: 2,
-          have_voucher: 0,
-          time: time_formatted
+          number_of_cup: 1,
+          time: "12:00",
+          have_voucher: '1'
         }
       end
 
-      it { expect(assigns(:total_price)).to eq 980 }
-    end
+      it do
+        expect(Exercise1::CalculateService).to receive(:new).with(
+          params[:number_of_cup],
+          params[:time],
+          params[:have_voucher]
+        ).and_call_original
 
-    context 'when drink within discount time' do
-      let(:time) { Time.current.change(hour: 16, min: 30) }
-      let(:params) do
-        {
-          number_of_cup: 2,
-          have_voucher: 0,
-          time: time_formatted
-        }
-      end
-
-      it { expect(assigns(:total_price)).to eq 580 }
-    end
-
-    context 'when have voucher' do
-      context 'when drink without discount time' do
-        let(:time) { Time.current.change(hour: 19) }
-        let(:params) do
-          {
-            number_of_cup: 2,
-            have_voucher: 1,
-            time: time_formatted
-          }
-        end
-
-        it { expect(assigns(:total_price)).to eq 590 }
-      end
-
-      context 'when drink within discount time' do
-        let(:time) { Time.current.change(hour: 16, min: 30) }
-        let(:params) do
-          {
-            number_of_cup: 2,
-            have_voucher: 1,
-            time: time_formatted
-          }
-        end
-
-        it { expect(assigns(:total_price)).to eq 390 }
+        get :index, params: params
       end
     end
 
-    context 'when number_of_cup is invalid' do
-      let(:time) { Time.current.change(hour: 16, min: 30) }
-
-      context 'when number_of_cup is negative' do
-        let(:params) do
-          {
-            number_of_cup: -2,
-            have_voucher: 0,
-            time: time_formatted
-          }
+    context 'assigns result of service to correct instance variables' do
+      shared_examples 'assigns correct instance variables' do |result, total_price, errors|
+        let(:response) do
+          OpenStruct.new(success?: result, total: total_price, errors: errors)
         end
 
-        it { expect(assigns(:errors)[:number_of_cup]).to eq :invalid }
+        before do
+          allow_any_instance_of(Exercise1::CalculateService).to receive(:perform).and_return(response)
+
+          get :index, params: {}
+        end
+
+        it { expect(assigns(:total_price)).to eq(total_price) }
+        it { expect(assigns(:errors)).to eq(errors) }
       end
 
-      context 'when number_of_cup is not number' do
-        context 'when number_of_cup is character' do
-          let(:params) do
-            {
-              number_of_cup: 'abc',
-              have_voucher: 0,
-              time: time_formatted
-            }
-          end
-
-          it { expect(assigns(:errors)[:number_of_cup]).to eq :invalid }
-        end
-
-        context 'when number_of_cup is float' do
-          let(:params) do
-            {
-              number_of_cup: 2.5,
-              have_voucher: 0,
-              time: time_formatted
-            }
-          end
-
-          it { expect(assigns(:errors)[:number_of_cup]).to eq :invalid }
-        end
-      end
-    end
-
-    context 'when time is invalid' do
-      context 'when time is out of range' do
-        let(:params) do
-          {
-            number_of_cup: 1,
-            have_voucher: 0,
-            time: '25:00'
-          }
-        end
-
-        it { expect(assigns(:errors)[:time]).to eq :invalid }
-      end
-
-      context 'when time contain character' do
-        let(:params) do
-          {
-            number_of_cup: 1,
-            have_voucher: 0,
-            time: 'ab:cd'
-          }
-        end
-
-        it { expect(assigns(:errors)[:time]).to eq :invalid }
-      end
+      it_behaves_like 'assigns correct instance variables', true, 100, {}
+      it_behaves_like 'assigns correct instance variables', false, 0, { number_of_cup: :invalid }
+      it_behaves_like 'assigns correct instance variables', false, 0, { time: :invalid }
     end
   end
 end
