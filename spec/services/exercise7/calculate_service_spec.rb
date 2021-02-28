@@ -42,6 +42,12 @@ RSpec.describe Exercise7::CalculateService, type: :service do
         it { expect(response.errors[:total_amount]).to eq :invalid }
       end
 
+      context 'when total_amount is blank' do
+        let(:args) { ['', '1', '1'] }
+
+        it { expect(response.errors[:total_amount]).to eq :invalid }
+      end
+
       context 'when fast_delivery is integer' do
         let(:args) { [2, 1, '1'] }
 
@@ -109,7 +115,7 @@ RSpec.describe Exercise7::CalculateService, type: :service do
           end
         end
 
-        context 'when total_amount is equal than 5000' do
+        context 'when total_amount is equal 5000' do
           let(:total_amount) { 5000 }
 
           context 'when do not have fast_delivery' do
@@ -161,7 +167,7 @@ RSpec.describe Exercise7::CalculateService, type: :service do
           end
         end
 
-        context 'when total_amount is equal than 5000' do
+        context 'when total_amount is equal 5000' do
           let(:total_amount) { 5000 }
 
           context 'when do not have fast_delivery' do
