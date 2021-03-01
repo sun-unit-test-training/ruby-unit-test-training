@@ -5,7 +5,7 @@ RSpec.describe Exercise1Controller, type: :controller do
     context 'initialize Exercise1::CalculateService with correct params' do
       let(:params) do
         {
-          number_of_cup: 1,
+          number_of_cup: 2,
           time: '12:00',
           have_voucher: '1'
         }
@@ -13,7 +13,7 @@ RSpec.describe Exercise1Controller, type: :controller do
 
       it do
         expect(Exercise1::CalculateService).to receive(:new).with(
-          params[:number_of_cup],
+          params[:number_of_cup].to_s,
           params[:time],
           params[:have_voucher]
         ).and_call_original
