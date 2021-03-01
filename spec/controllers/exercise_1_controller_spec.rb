@@ -6,7 +6,7 @@ RSpec.describe Exercise1Controller, type: :controller do
       let(:params) do
         {
           number_of_cup: 1,
-          time: "12:00",
+          time: '12:00',
           have_voucher: '1'
         }
       end

@@ -10,7 +10,7 @@ RSpec.describe Exercise1::CalculateService, type: :service do
         let(:number_of_cup) { number_of_cup }
 
         it do
-          expect {subject}.to raise_error(ArgumentError)
+          expect { subject }.to raise_error(ArgumentError)
           expect(service.errors[:number_of_cup]).to eq(:invalid)
         end
       end
@@ -44,7 +44,7 @@ RSpec.describe Exercise1::CalculateService, type: :service do
         let(:time) { time }
         
         it do
-          expect {subject}.to raise_error(ArgumentError)
+          expect { subject }.to raise_error(ArgumentError)
           expect(service.errors[:time]).to eq(:invalid)
         end
       end
@@ -82,26 +82,26 @@ RSpec.describe Exercise1::CalculateService, type: :service do
 
     let(:service) { described_class.new(nil, time, nil) }
 
-    it_behaves_like 'is discount time', Time.zone.parse("16:00")
-    it_behaves_like 'is discount time', Time.zone.parse("17:59")
-    it_behaves_like 'is discount time', Time.zone.parse("17:00")
+    it_behaves_like 'is discount time', Time.zone.parse('16:00')
+    it_behaves_like 'is discount time', Time.zone.parse('17:59')
+    it_behaves_like 'is discount time', Time.zone.parse('17:00')
 
-    it_behaves_like 'is not discount time', Time.zone.parse("15:59")
-    it_behaves_like 'is not discount time', Time.zone.parse("18:00")
-    it_behaves_like 'is not discount time', Time.zone.parse("10:00")
-    it_behaves_like 'is not discount time', Time.zone.parse("20:00")
+    it_behaves_like 'is not discount time', Time.zone.parse('15:59')
+    it_behaves_like 'is not discount time', Time.zone.parse('18:00')
+    it_behaves_like 'is not discount time', Time.zone.parse('10:00')
+    it_behaves_like 'is not discount time', Time.zone.parse('20:00')
   end
 
-  describe '#have_voucher?' do
+  describe '#voucher?' do
     shared_examples 'have voucher' do |have_voucher|
       let(:have_voucher) { have_voucher }
 
-      it { expect(service.send(:have_voucher?)).to eq(true) }
+      it { expect(service.send(:voucher?)).to eq(true) }
     end
     shared_examples 'have no voucher' do |have_voucher|
       let(:have_voucher) { have_voucher }
 
-      it { expect(service.send(:have_voucher?)).to eq(false) }
+      it { expect(service.send(:voucher?)).to eq(false) }
     end
 
     let(:service) { described_class.new(nil, nil, have_voucher) }
@@ -126,7 +126,7 @@ RSpec.describe Exercise1::CalculateService, type: :service do
 
   describe '#price_of_first_cup' do
     shared_examples 'calculate price exactly' do |have_voucher, price|
-      before { expect(service).to receive(:have_voucher?).and_return(have_voucher) }
+      before { expect(service).to receive(:voucher?).and_return(have_voucher) }
       
       it { expect(service.send(:price_of_first_cup)).to eq(price) }
     end
@@ -197,7 +197,7 @@ RSpec.describe Exercise1::CalculateService, type: :service do
           expect(service).not_to receive(:total_price)
         end
 
-        it_behaves_like 'calculate price exactly', nil, "12:00", 0
+        it_behaves_like 'calculate price exactly', nil, '12:00', 0
         it_behaves_like 'calculate price exactly', 3, nil, 0
         it_behaves_like 'calculate price exactly', nil, nil, 0
       end
@@ -209,13 +209,13 @@ RSpec.describe Exercise1::CalculateService, type: :service do
           expect(service).to receive(:total_price).and_return(123)
         end
 
-        it_behaves_like 'calculate price exactly', 2, "12:00", 123
+        it_behaves_like 'calculate price exactly', 2, '12:00', 123
       end
     end
 
     context 'when submit invalid data' do
-      it_behaves_like 'have errors', -5, "12:00", {number_of_cup: :invalid}
-      it_behaves_like 'have errors', 2, "aa:bb", {time: :invalid}
+      it_behaves_like 'have errors', -5, '12:00', { number_of_cup: :invalid }
+      it_behaves_like 'have errors', 2, 'aa:bb', { time: :invalid }
     end
   end
 end

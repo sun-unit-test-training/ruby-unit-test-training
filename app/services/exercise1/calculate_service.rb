@@ -44,7 +44,7 @@ module Exercise1
       time.between?(*discount_time)
     end
 
-    def have_voucher?
+    def voucher?
       have_voucher == '1'
     end
 
@@ -55,11 +55,12 @@ module Exercise1
 
     def price_of_first_cup
       @price_of_first_cup ||=
-        have_voucher? ? settings.price_with_voucher : price_at_time
+        voucher? ? settings.price_with_voucher : price_at_time
     end
 
     def total_price
       return 0 unless number_of_cup.positive?
+
       (number_of_cup - 1) * price_at_time + price_of_first_cup
     end
 
