@@ -1,19 +1,15 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Exercise5::CalculateService, type: :service do
-  shared_examples "response examples" do |total, promotion|
-    it { expect(subject.total).to eq total }
-    it { expect(subject.promotion).to eq promotion }
-  end
+  let(:caculate_service) { described_class.new(total_bill, pickup_at_store, have_voucher) }
+  let(:total_bill) { 1000 }
+  let(:pickup_at_store) { true }
+  let(:have_voucher) { true }
 
-  shared_examples "response when args's invalid" do |total, promotion|
-    it { is_expected.to eq :invalid }
-  end
-
-  describe '#new' do
+  describe "#new" do
     let(:service) { Exercise5::CalculateService }
 
-    context 'when pass enought args' do
+    context "when pass enought args" do
       it { expect { service.new(1500, true, nil) }.to_not raise_error }
       it { expect { service.new(1500, true, nil).perform }.to_not raise_error }
       it { expect { service.new(1500, nil, true) }.to_not raise_error }
@@ -24,139 +20,199 @@ RSpec.describe Exercise5::CalculateService, type: :service do
       it { expect { service.new(nil, nil, nil).perform }.to_not raise_error }
     end
 
-    context 'when miss args' do
+    context "when miss args" do
       it { expect { service.new(1, true) }.to raise_error }
     end
   end
 
-  describe '#perform' do
-    let(:service) { Exercise5::CalculateService.new(*args) }
-    let(:response) { service.perform }
+  describe "#perform" do
+    subject { caculate_service.perform }
 
-    describe 'validate args' do
-      context 'when total_bill is invalid' do
-        subject { response.errors[:total_bill] }
+    context "when total_bill is nil" do
+      let(:total_bill) { nil }
 
-        context 'when total_bill is negative' do
-          let(:args) { [-2, nil, nil] }
+      it_behaves_like "Exercise5::CalculateService#perform", true, nil, [], {}
+    end
 
-          include_examples "response when args's invalid"
+    context "when total_bill is invalid" do
+      let(:total_bill) { -1000 }
+
+      it_behaves_like "Exercise5::CalculateService#perform", false, -1000, [], { total_bill: :invalid }
+    end
+
+    context "when total_bill is valid" do
+      context "when caculate promotion" do
+        context "when total_bill is greater than min_bill_for_discount" do
+          let(:total_bill) { 1600 }
+
+          it_behaves_like "Exercise5::CalculateService#perform", true, 1600, ["Tặng khoai tây", "Tặng Pizza thứ 2"], {}
         end
 
-        context 'when total_bill is not number' do
-          context 'when total_bill is character' do
-            let(:args) { ['abc', nil, nil] }
+        context "when total_bill is equal to min_bill_for_discount" do
+          let(:total_bill) { 1500 }
 
-            include_examples "response when args's invalid"
-          end
+          it_behaves_like "Exercise5::CalculateService#perform", true, 1500, ["Tặng Pizza thứ 2"], {}
+        end
 
-          context 'when total_bill is float' do
-            let(:args) { [1.5, nil, nil] }
+        context "when total_bill is less than min_bill_for_discount" do
+          let(:total_bill) { 1400 }
 
-            include_examples "response when args's invalid"
-          end
+          it_behaves_like "Exercise5::CalculateService#perform", true, 1400, ["Tặng Pizza thứ 2"], {}
+        end
+
+        context "when pickup_at_store is truthy" do
+          let(:pickup_at_store) { true }
+
+          it_behaves_like "Exercise5::CalculateService#perform", true, 1000, ["Tặng Pizza thứ 2"], {}
+        end
+
+        context "when pickup_at_store is falsy" do
+          let(:pickup_at_store) { false }
+
+          it_behaves_like "Exercise5::CalculateService#perform", true, 800, ["Giảm giá 20%"], {}
+        end
+      end
+
+      context "when calculate discount at home" do
+        context "when pickup_at_store is present" do
+          let(:pickup_at_store) { true }
+
+          it_behaves_like "Exercise5::CalculateService#perform", true, 1000, ["Tặng Pizza thứ 2"], {}
+        end
+
+        context "when have_voucher is blank" do
+          let(:have_voucher) { false }
+
+          it_behaves_like "Exercise5::CalculateService#perform", true, 1000, ["Tặng Pizza thứ 2"], {}
+        end
+
+        context "when pickup_at_store not present and have_voucher not blank" do
+          let(:pickup_at_store) { false }
+          let(:have_voucher) { true}
+
+          it_behaves_like "Exercise5::CalculateService#perform", true, 800, ["Giảm giá 20%"], {}
         end
       end
     end
+  end
 
-    describe 'calculate logic' do
-      subject { service.perform }
+  describe "#validate_total_bill" do
+    subject { caculate_service.send :validate_total_bill, number }
 
-      context 'when bill over 1500yen' do
-        context 'deliver to home' do
-          context 'with coupon' do
-            let(:args) { [1501, nil, true] }
+    context "when number is valid" do
+      let(:number) { "1000" }
 
-            include_examples "response examples", 1201, ["Tặng khoai tây", "Giảm giá 20%"]
-          end
+      it { is_expected.to eq 1000 }
+      it { expect { subject }.not_to change { caculate_service.send(:errors) } }
+      it { expect { subject }.not_to raise_error(ArgumentError) }
+    end
 
-          context 'without coupon' do
-            let(:args) { [1501, nil, nil] }
+    context "when number is invalid" do
+      let(:number) { "-1000" }
 
-            include_examples "response examples", 1501, ["Tặng khoai tây"]
-          end
-        end
-
-        context 'pickup at store' do
-          context 'with coupon' do
-            let(:args) { [1501, true, true] }
-
-            include_examples "response examples", 1501, ["Tặng khoai tây", "Tặng Pizza thứ 2"]
-          end
-
-          context 'without coupon' do
-            let(:args) { [1501, true, nil] }
-
-            include_examples "response examples", 1501, ["Tặng khoai tây", "Tặng Pizza thứ 2"]
-          end
-        end
+      it { expect { subject }.to raise_error(ArgumentError) }
+      it do
+        subject
+      rescue
+        expect(caculate_service.send(:errors)).to eq({total_bill: :invalid})
       end
+    end
+  end
 
-      context 'when bill equal 1500yen' do
-        context 'deliver to home' do
-          context 'with coupon' do
-            let(:args) { [1500, nil, true] }
+  describe "response" do
+    subject { caculate_service.send :response, result }
 
-            include_examples "response examples", 1200, ["Giảm giá 20%"]
-          end
+    let(:result) { true }
+    let(:total_bill) { 1000 }
+    let(:promotion) { [] }
+    let(:errors) { {} }
 
-          context 'without coupon' do
-            let(:args) { [1500, nil, nil] }
+    before do
+      allow(caculate_service).to receive_messages(
+        total_bill: total_bill,
+        promotion: promotion,
+        errors: errors
+      )
+    end
 
-            include_examples "response examples", 1500, []
-          end
-        end
+    it do
+      expect(subject.success?).to eq result
+      expect(subject.total).to eq total_bill
+      expect(subject.promotion).to eq promotion
+      expect(subject.errors).to eq errors
+    end
+  end
 
-        context 'pickup at store' do
-          context 'with coupon' do
-            let(:args) { [1500, true, true] }
+  describe "calculate_discount_at_home" do
+    subject { caculate_service.send :calculate_discount_at_home }
 
-            include_examples "response examples", 1500, ["Tặng Pizza thứ 2"]
-          end
+    let(:pickup_at_store) { false }
+    let(:have_voucher) { true }
 
-          context 'without coupon' do
-            let(:args) { [1500, true, nil] }
+    context "when pickup_at_store is present" do
+      let(:pickup_at_store) { true }
 
-            include_examples "response examples", 1500, ["Tặng Pizza thứ 2"]
-          end
-        end
+      it { expect { subject }.not_to change { caculate_service.send(:total_bill) } }
+      it do
+        subject
+        expect(caculate_service.send(:promotion)).not_to include "Giảm giá 20%"
       end
+    end
 
-      context 'when bill under 1500yen' do
-        context 'deliver to home' do
-          context 'with coupon' do
-            let(:args) { [1499, nil, true] }
+    context "when have_voucher is blank" do
+      let(:have_voucher) { false }
 
-            include_examples "response examples", 1200, ["Giảm giá 20%"]
-          end
-
-          context 'without coupon' do
-            let(:args) { [1499, nil, nil] }
-
-            include_examples "response examples", 1499, []
-          end
-        end
-
-        context 'pickup at store' do
-          context 'with coupon' do
-            let(:args) { [1499, true, true] }
-
-            include_examples "response examples", 1499, ["Tặng Pizza thứ 2"]
-          end
-
-          context 'without coupon' do
-            let(:args) { [1499, true, nil] }
-
-            include_examples "response examples", 1499, ["Tặng Pizza thứ 2"]
-          end
-        end
+      it { expect { subject }.not_to change { caculate_service.send(:total_bill) } }
+      it do
+        subject
+        expect(caculate_service.send(:promotion)).not_to include "Giảm giá 20%"
       end
+    end
 
-      context 'when bill is nil' do
-        let(:args) { [nil, nil, nil] }
-
-        include_examples "response examples", nil, []
+    context "when not pickup_at_store and have_voucher" do
+      it { expect { subject}.to change { caculate_service.send(:total_bill) }.from(1000).to(800) }
+      it do
+        subject
+        expect(caculate_service.send(:promotion)).to include "Giảm giá 20%"
       end
+    end
+  end
+
+  describe "calculate_promotion" do
+    subject { caculate_service.send :calculate_promotion }
+
+    let(:promotion) { caculate_service.send(:promotion) }
+
+    before { subject }
+
+    context "when total_bill is greater than min_bill_for_discount" do
+      let(:total_bill) { 1600 }
+
+      it { expect(promotion).to include "Tặng khoai tây" }
+    end
+
+    context "when total_bill is equal to min_bill_for_discount" do
+      let(:total_bill) { 1500 }
+
+      it { expect(promotion).not_to include "Tặng khoai tây" }
+    end
+
+    context "when total_bill is less than min_bill_for_discount" do
+      let(:total_bill) { 1400 }
+
+      it { expect(promotion).not_to include "Tặng khoai tây" }
+    end
+
+    context "when pickup_at_store is truthy" do
+      let(:pickup_at_store) { true }
+
+      it { expect(promotion).to include "Tặng Pizza thứ 2" }
+    end
+
+    context "when pickup_at_store is falsy" do
+      let(:pickup_at_store) { false }
+
+      it { expect(promotion).not_to include "Tặng Pizza thứ 2" }
     end
   end
 end
