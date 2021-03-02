@@ -7,6 +7,7 @@ RSpec.describe Exercise7Controller, type: :controller do
     let!(:random_premium) { [0, 1].sample.to_s }
     let!(:random_delivery_fee) { rand(500) }
     let(:result) { OpenStruct.new(delivery_fee: random_delivery_fee, errors: { foo: "bar"}) }
+    let(:service_instance) { instance_double(Exercise7::CalculateService, perform: result) }
 
     it "should initialize service with received params" do
       expect(Exercise7::CalculateService)
@@ -20,7 +21,7 @@ RSpec.describe Exercise7Controller, type: :controller do
     end
 
     it "should return delivery_fee and errors" do
-      allow_any_instance_of(Exercise7::CalculateService).to receive(:perform).and_return(result)
+      allow(Exercise7::CalculateService).to receive(:new).and_return(service_instance)
       get :index
 
       expect(assigns(:delivery_fee)).to eq(random_delivery_fee)
