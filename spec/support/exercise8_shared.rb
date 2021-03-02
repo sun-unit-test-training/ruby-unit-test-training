@@ -1,23 +1,38 @@
 shared_examples 'Ex8 expect ticket_booking_day' do |price_args|
+  let(:data_stub) do
+    {
+      ticket_price: ticket_price,
+      errors: {}
+    }
+  end
+
+  before do
+    allow(Exercise8::CalculateTicketPriceService).to receive(:new).with(params).and_return(service_stub)
+    allow(service_stub).to receive(:perform).and_return(data_stub)
+  end
+
   context 'ticket_booking_day is Tuesday' do
     # mock ticket_booking_day is Tuesday
     let(:ticket_booking_day) { Time.now.next_occurring(:tuesday) }
+    let(:ticket_price) { price_args[0] }
 
-    it { expect(assigns(:ticket_price)).to eq price_args[0] }
+    it { expect(assigns(:ticket_price)).to eq ticket_price }
   end
 
   context 'ticket_booking_day is Friday' do
-    # mock ticket_booking_day is Tuesday
+    # mock ticket_booking_day is Friday
     let(:ticket_booking_day) { Time.now.next_occurring(:friday) }
+    let(:ticket_price) { price_args[1] }
 
-    it { expect(assigns(:ticket_price)).to eq price_args[1] }
+    it { expect(assigns(:ticket_price)).to eq ticket_price }
   end
 
   context 'not Tuesday and Friday' do
     # mock ticket_booking_day isn't both Tuesday and Friday
     let(:ticket_booking_day) { Time.now.next_occurring(:wednesday) }
+    let(:ticket_price) { price_args[2] }
 
-    it { expect(assigns(:ticket_price)).to eq price_args[2] }
+    it { expect(assigns(:ticket_price)).to eq ticket_price }
   end
 end
 
