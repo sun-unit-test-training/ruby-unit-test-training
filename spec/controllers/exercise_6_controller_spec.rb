@@ -5,7 +5,8 @@ RSpec.describe Exercise6Controller, type: :controller do
     context "when get success" do
       before { get :free_parking_time }
 
-      it do expect(response).to have_http_status(:ok)
+      it do
+        expect(response).to have_http_status(:ok)
         expect(assigns(:errors)).to be_empty
         expect(assigns(:total_free_parking_time)).to eq 0
         expect(response).to render_template :free_parking_time
@@ -14,8 +15,11 @@ RSpec.describe Exercise6Controller, type: :controller do
   end
 
   describe 'POST #calculate_free_parking_time' do
+    let(:service_obj) {instance_double(Exercise6::CalculateFreeParkingTimeService)}
+
     before do
-      allow_any_instance_of(Exercise6::CalculateFreeParkingTimeService).to receive(:perform).and_return(expected_response)
+      allow(service_obj).to receive(:perform).and_return(expected_response)
+      allow(Exercise6::CalculateFreeParkingTimeService).to receive(:new).and_return(service_obj)
       post :calculate_free_parking_time
     end
 
