@@ -2,21 +2,20 @@ require 'rails_helper'
 
 RSpec.describe Exercise7Controller, type: :controller do
   describe '#index' do
-    let!(:random_amount) { rand(10000).to_s }
-    let!(:random_fast_delivery) { [0, 1].sample.to_s }
-    let!(:random_premium) { [0, 1].sample.to_s }
-    let!(:random_delivery_fee) { rand(500) }
-    let(:result) { OpenStruct.new(delivery_fee: random_delivery_fee, errors: { foo: "bar"}) }
+    let(:amount) { "10000" }
+    let(:fast_delivery) { "0" }
+    let(:premium) { "0" }
+    let(:delivery_fee) { 123 }
+    let(:result) { OpenStruct.new(delivery_fee: delivery_fee, errors: { foo: "bar"}) }
     let(:service_instance) { instance_double(Exercise7::CalculateService, perform: result) }
 
     it "should initialize service with received params" do
-      expect(Exercise7::CalculateService)
-        .to receive(:new).with(random_amount, random_fast_delivery, random_premium).and_call_original
+      expect(Exercise7::CalculateService).to receive(:new).with(amount, fast_delivery, premium).and_call_original
 
       get :index, params: {
-        total_amount: random_amount,
-        fast_delivery: random_fast_delivery,
-        premium: random_premium
+        total_amount: amount,
+        fast_delivery: fast_delivery,
+        premium: premium
       }
     end
 
@@ -24,7 +23,7 @@ RSpec.describe Exercise7Controller, type: :controller do
       allow(Exercise7::CalculateService).to receive(:new).and_return(service_instance)
       get :index
 
-      expect(assigns(:delivery_fee)).to eq(random_delivery_fee)
+      expect(assigns(:delivery_fee)).to eq(delivery_fee)
       expect(assigns(:errors)).to eq({ foo: "bar"})
       expect(response).to render_template(:index)
     end
