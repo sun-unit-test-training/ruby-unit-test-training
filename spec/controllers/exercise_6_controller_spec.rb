@@ -15,23 +15,36 @@ RSpec.describe Exercise6Controller, type: :controller do
   end
 
   describe 'POST #calculate_free_parking_time' do
-    let(:calculate_free_parking_time_service_stub) {double(Exercise6::CalculateFreeParkingTimeService)}
+    let(:calculate_free_parking_time_service_stub) { double(Exercise6::CalculateFreeParkingTimeService) }
 
     before do
-      allow(calculate_free_parking_time_service_stub).to receive(:perform).and_return(expected_response)
-      allow(Exercise6::CalculateFreeParkingTimeService).to receive(:new).and_return(calculate_free_parking_time_service_stub)
-      post :calculate_free_parking_time
+      allow(calculate_free_parking_time_service_stub).to receive(:perform).and_return(expected_result)
+      allow(Exercise6::CalculateFreeParkingTimeService).to receive(:new).with(params[:amount], params[:watch_movie])
+        .and_return(calculate_free_parking_time_service_stub)
+      post :calculate_free_parking_time, params: params
     end
 
     context 'when service perform successfully' do
-      let(:expected_response) {OpenStruct.new success?: true, total_free_parking_time: 200, errors: {}}
+      let(:params) do
+        {
+          amount: "2000",
+          watch_movie: 'true'
+        }
+      end
+      let(:expected_result) { OpenStruct.new success?: true, total_free_parking_time: 240, errors: {} }
 
-      it_behaves_like 'exercise 6 controller success response', free_parking_time: 200
+      it_behaves_like 'exercise 6 controller success response', free_parking_time: 240
     end
 
     context 'when service perform failed due to invalid params' do
-      let(:expected_response) {OpenStruct.new success?: false, total_free_parking_time: 0, errors: errors}
-      let(:errors) {{amount: :invalid}}
+      let(:params) do
+        {
+          amount: 'abc',
+          watch_movie: 'true'
+        }
+      end
+      let(:expected_result) { OpenStruct.new success?: false, total_free_parking_time: 0, errors: errors }
+      let(:errors) { {amount: :invalid} }
 
       it { expect(assigns(:errors)[:amount]).to eq :invalid }
     end
