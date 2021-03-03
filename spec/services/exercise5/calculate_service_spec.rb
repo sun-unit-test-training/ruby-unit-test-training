@@ -11,13 +11,9 @@ RSpec.describe Exercise5::CalculateService, type: :service do
 
     context "when pass enought args" do
       it { expect { service.new(1500, true, nil) }.to_not raise_error }
-      it { expect { service.new(1500, true, nil).perform }.to_not raise_error }
       it { expect { service.new(1500, nil, true) }.to_not raise_error }
-      it { expect { service.new(1500, nil, true).perform }.to_not raise_error }
       it { expect { service.new(nil, true, true) }.to_not raise_error }
-      it { expect { service.new(nil, true, true).perform }.to_not raise_error }
       it { expect { service.new(nil, nil, nil) }.to_not raise_error }
-      it { expect { service.new(nil, nil, nil).perform }.to_not raise_error }
     end
 
     context "when miss args" do
@@ -102,24 +98,24 @@ RSpec.describe Exercise5::CalculateService, type: :service do
     context "when number is valid" do
       let(:number) { "1000" }
 
-      it { is_expected.to eq 1000 }
-      it { expect { subject }.not_to change { caculate_service.send(:errors) } }
-      it { expect { subject }.not_to raise_error(ArgumentError) }
+      it "should not raise error" do
+        expect(subject).to eq 1000
+        expect { subject }.not_to change { caculate_service.send(:errors) }
+        expect { subject }.not_to raise_error(ArgumentError)
+      end
     end
 
     context "when number is invalid" do
       let(:number) { "-1000" }
 
-      it { expect { subject }.to raise_error(ArgumentError) }
-      it do
-        subject
-      rescue
+      it "should not raise error" do
+        expect { subject }.to raise_error(ArgumentError)
         expect(caculate_service.send(:errors)).to eq({total_bill: :invalid})
       end
     end
   end
 
-  describe "response" do
+  describe "#response" do
     subject { caculate_service.send :response, result }
 
     let(:result) { true }
@@ -135,7 +131,7 @@ RSpec.describe Exercise5::CalculateService, type: :service do
       )
     end
 
-    it do
+    it "should return subject with values" do
       expect(subject.success?).to eq result
       expect(subject.total).to eq total_bill
       expect(subject.promotion).to eq promotion
@@ -143,18 +139,19 @@ RSpec.describe Exercise5::CalculateService, type: :service do
     end
   end
 
-  describe "calculate_discount_at_home" do
+  describe "#calculate_discount_at_home" do
     subject { caculate_service.send :calculate_discount_at_home }
 
     let(:pickup_at_store) { false }
     let(:have_voucher) { true }
 
+    before { subject }
+
     context "when pickup_at_store is present" do
       let(:pickup_at_store) { true }
 
-      it { expect { subject }.not_to change { caculate_service.send(:total_bill) } }
-      it do
-        subject
+      it "should return promotion not include Giảm giá 20%" do
+        expect(caculate_service.send(:total_bill)).to eq 1000
         expect(caculate_service.send(:promotion)).not_to include "Giảm giá 20%"
       end
     end
@@ -162,23 +159,21 @@ RSpec.describe Exercise5::CalculateService, type: :service do
     context "when have_voucher is blank" do
       let(:have_voucher) { false }
 
-      it { expect { subject }.not_to change { caculate_service.send(:total_bill) } }
-      it do
-        subject
+      it "should return promotion not include Giảm giá 20%" do
+        expect(caculate_service.send(:total_bill)).to eq 1000
         expect(caculate_service.send(:promotion)).not_to include "Giảm giá 20%"
       end
     end
 
     context "when not pickup_at_store and have_voucher" do
-      it { expect { subject}.to change { caculate_service.send(:total_bill) }.from(1000).to(800) }
-      it do
-        subject
+      it "should return promotion include Giảm giá 20%" do
+        expect(caculate_service.send(:total_bill)).to eq 800
         expect(caculate_service.send(:promotion)).to include "Giảm giá 20%"
       end
     end
   end
 
-  describe "calculate_promotion" do
+  describe "#calculate_promotion" do
     subject { caculate_service.send :calculate_promotion }
 
     let(:promotion) { caculate_service.send(:promotion) }

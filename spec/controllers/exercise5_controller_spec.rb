@@ -25,7 +25,7 @@ RSpec.describe Exercise5Controller, type: :controller do
     end
 
     it "should assigns response" do
-      allow_any_instance_of(Exercise5::CalculateService).to receive(:perform)
+      expect_any_instance_of(Exercise5::CalculateService).to receive(:perform)
         .with(no_args)
         .and_return(response)
 
