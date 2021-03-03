@@ -15,11 +15,11 @@ RSpec.describe Exercise6Controller, type: :controller do
   end
 
   describe 'POST #calculate_free_parking_time' do
-    let(:service_obj) {instance_double(Exercise6::CalculateFreeParkingTimeService)}
+    let(:calculate_free_parking_time_service_stub) {double(Exercise6::CalculateFreeParkingTimeService)}
 
     before do
-      allow(service_obj).to receive(:perform).and_return(expected_response)
-      allow(Exercise6::CalculateFreeParkingTimeService).to receive(:new).and_return(service_obj)
+      allow(calculate_free_parking_time_service_stub).to receive(:perform).and_return(expected_response)
+      allow(Exercise6::CalculateFreeParkingTimeService).to receive(:new).and_return(calculate_free_parking_time_service_stub)
       post :calculate_free_parking_time
     end
 
