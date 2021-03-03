@@ -94,12 +94,6 @@ RSpec.describe Exercise4::CalendarService do
     end
 
     context "when day_in_month isn't holiday, sunday or saturday" do
-      before do
-        allow(calendar_service).to receive(:holiday?).and_return(false)
-        allow(calendar_service).to receive(:sunday?).and_return(false)
-        allow(calendar_service).to receive(:saturday?).and_return(false)
-      end
-
       it { is_expected.to eq({ 22 => "black" }) }
     end
   end

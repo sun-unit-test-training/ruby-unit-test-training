@@ -9,6 +9,11 @@ RSpec.describe Exercise4Controller, type: :controller do
     let(:choose_day) { double :choose_day }
     let(:errors) { double :errors }
     let(:response) { double :response, data: choose_day, errors: errors }
+    let(:calendar_service) { Exercise4::CalendarService.new(day_in_month) }
+
+    before do
+      allow(Exercise4::CalendarService).to receive(:new).with(day_in_month).and_return(calendar_service)
+    end
 
     it "should initialize service with received params" do
       expect(Exercise4::CalendarService).to receive(:new).with(day_in_month).and_call_original
@@ -16,7 +21,7 @@ RSpec.describe Exercise4Controller, type: :controller do
     end
 
     it "should assigns response, choose_day and errors" do
-      allow_any_instance_of(Exercise4::CalendarService).to receive(:perform).with(no_args).and_return(response)
+      expect(calendar_service).to receive(:perform).with(no_args).and_return(response)
       subject
       expect(assigns(:response)).to eq response
       expect(assigns(:choose_day)).to eq choose_day
