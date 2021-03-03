@@ -27,14 +27,13 @@ RSpec.describe Exercise10Controller do
     end
 
     it "return response data" do
-      service = instance_double(Exercise10::CalculateTotalAmountService)
-      allow(service).to receive(:perform).and_return(response)
-      allow(Exercise10::CalculateTotalAmountService).to receive(:new).with(rank, total_amount).and_return(service)
+      stub_service = instance_double(Exercise10::CalculateTotalAmountService)
+      allow(stub_service).to receive(:perform).and_return(response)
+      allow(Exercise10::CalculateTotalAmountService).to receive(:new).with(rank, total_amount).and_return(stub_service)
+
       subject
 
-      expect(assigns(:response).total_amount).to eq total_amount_dou
-      expect(assigns(:response).discount_percent).to eq discount_percent
-      expect(assigns(:response).discount_amount).to eq discount_amount
+      expect(assigns(:response)).to eq response
       expect(assigns(:coupon)).to eq nil
       expect(assigns(:errors)).to eq response.errors
     end
