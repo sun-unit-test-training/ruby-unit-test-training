@@ -167,9 +167,7 @@ RSpec.describe Exercise1::CalculateService, type: :service do
       let(:number_of_cup) { number_of_cup }
       let(:time) { time }
 
-      subject do
-        service.perform
-      end
+      subject { service.perform }
 
       it do
         is_expected.to eq(OpenStruct.new(success?: true, total: price, errors: {}))

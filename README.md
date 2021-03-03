@@ -14,5 +14,7 @@
   - Run `bundle exec rake init_hanoi_quest_data:create` to setup database for exercise 9
 
 * Docker version:
-  - Run `docker-compose build`
+  - Run `docker-compose build` to build image
   - Run `docker-compose run web bundle exec rails db:create db:migrate` to create and migrate database
+  - Run `docker-compose run --rm web bundle exec rails init_hanoi_quest_data:create` to setup database for exercise 9 
+  - Run `docker-compose up` to start application container
