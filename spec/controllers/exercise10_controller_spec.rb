@@ -16,7 +16,7 @@ RSpec.describe Exercise10Controller do
         "give_coupon":  nil
       }
     end
-    let(:response) do
+    let(:expected_response) do
       OpenStruct.new(
         success?:         true,
         discount_percent: discount_percent,
@@ -28,14 +28,14 @@ RSpec.describe Exercise10Controller do
 
     it "return response data" do
       stub_service = instance_double(Exercise10::CalculateTotalAmountService)
-      allow(stub_service).to receive(:perform).and_return(response)
+      allow(stub_service).to receive(:perform).and_return(expected_response)
       allow(Exercise10::CalculateTotalAmountService).to receive(:new).with(rank, total_amount).and_return(stub_service)
 
       subject
 
-      expect(assigns(:response)).to eq response
+      expect(assigns(:response)).to eq expected_response
       expect(assigns(:coupon)).to eq nil
-      expect(assigns(:errors)).to eq response.errors
+      expect(assigns(:errors)).to eq expected_response.errors
     end
   end
 
