@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Exercise10Controller do
-  describe "POST checkout" do
+  describe "#checkout POST" do
     subject { post :checkout, params: params }
 
     let(:rank) { "silver" }
@@ -35,12 +35,12 @@ RSpec.describe Exercise10Controller do
       subject
 
       expect(assigns(:response)).to eq expected_response
-      expect(assigns(:coupon)).to eq nil
+      expect(assigns(:coupon)).to be_nil
       expect(assigns(:errors)).to eq expected_response.errors
     end
   end
 
-  describe "GET checkout" do
+  describe "#checkout GET" do
     context "when get success" do
       before { get :checkout }
 
