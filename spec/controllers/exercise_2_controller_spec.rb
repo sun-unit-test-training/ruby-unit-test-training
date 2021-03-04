@@ -8,8 +8,7 @@ RSpec.describe Exercise2Controller, type: :controller do
   end
 
   describe '#create' do
-    before { post :create, params: params }
-
+    let(:transaction) { Transaction.new params[:transaction] }
     let(:params) do
       {
         transaction: {
@@ -17,6 +16,11 @@ RSpec.describe Exercise2Controller, type: :controller do
           amount: amount
         }
       }
+    end
+
+    before do
+      allow(Transaction).to receive(:new).and_return(transaction)
+      post :create, params: params
     end
 
     context 'when submit invalid data' do
@@ -70,6 +74,15 @@ RSpec.describe Exercise2Controller, type: :controller do
       it 'should calculate fee' do
         expect(assigns(:fee)).not_to be_nil
         expect(response).to render_template(:new)
+      end
+
+      it 'should assigns transaction' do
+        expect(assigns(:transaction)).to eq transaction
+      end
+
+      it "should call 'fee'" do
+        expect(transaction).to receive(:fee)
+        post :create, params: params
       end
     end
   end
