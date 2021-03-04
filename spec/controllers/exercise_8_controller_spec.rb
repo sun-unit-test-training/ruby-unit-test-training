@@ -13,30 +13,53 @@ RSpec.describe Exercise8Controller, type: :controller do
         ticket_booking_day: ticket_booking_day
       }
     end
+    let(:service_stub) { double('Exercise8::CalculateTicketPriceService') }
 
     before { get :index, params: params }
 
     context 'when input data invalid' do
-      context 'age is negative' do
-        let(:age) { -1 }
-        let(:gender) { 1 }
-        let(:ticket_booking_day) { Time.now.tomorrow }
-
-        it { expect(assigns(:errors)[:age]).to eq :invalid }
+      before do
+        allow(Exercise8::CalculateTicketPriceService).to receive(:new).with(params).and_return(service_stub)
+        allow(service_stub).to receive(:perform).and_return(data_stub)
       end
+      context 'age invalid' do
+        let(:data_stub) do
+          {
+            ticket_price: 0,
+            errors: {
+              age: :invalid
+            }
+          }
+        end
 
-      context 'age is greater than 120' do
-        let(:age) { 121 }
-        let(:gender) { 1 }
-        let(:ticket_booking_day) { Time.now.tomorrow }
+        context 'age is negative' do
+          let(:age) { -1 }
+          let(:gender) { 1 }
+          let(:ticket_booking_day) { Time.now.tomorrow }
+          it { expect(assigns(:errors)[:age]).to eq :invalid }
+        end
 
-        it { expect(assigns(:errors)[:age]).to eq :invalid }
+        context 'age is greater than 120' do
+          let(:age) { 121 }
+          let(:gender) { 1 }
+          let(:ticket_booking_day) { Time.now.tomorrow }
+
+          it { expect(assigns(:errors)[:age]).to eq :invalid }
+        end
       end
 
       context 'gender invalid' do
         let(:age) { 1 }
         let(:gender) { 'abcd' }
         let(:ticket_booking_day) { Time.now.tomorrow }
+        let(:data_stub) do
+          {
+            ticket_price: 0,
+            errors: {
+              gender: :invalid
+            }
+          }
+        end
 
         it { expect(assigns(:errors)[:gender]).to eq :invalid }
       end
@@ -44,6 +67,14 @@ RSpec.describe Exercise8Controller, type: :controller do
       context 'ticket_booking_day invalid' do
         let(:age) { 1 }
         let(:gender) { 0 }
+        let(:data_stub) do
+          {
+            ticket_price: 0,
+            errors: {
+              ticket_booking_day: :invalid
+            }
+          }
+        end
         context 'ticket_booking_day is not date' do
           let(:ticket_booking_day) { 'abc' }
 
