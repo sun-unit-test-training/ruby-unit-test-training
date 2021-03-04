@@ -5,117 +5,48 @@ RSpec.describe Exercise6Controller, type: :controller do
     context "when get success" do
       before { get :free_parking_time }
 
-      it { expect(response).to have_http_status(:ok) }
-      it { expect(assigns(:errors)).to be_empty }
-      it { expect(assigns(:total_free_parking_time)).to eq 0 }
-      it { expect(response).to render_template :free_parking_time }
+      it do
+        expect(response).to have_http_status(:ok)
+        expect(assigns(:errors)).to be_empty
+        expect(assigns(:total_free_parking_time)).to eq 0
+        expect(response).to render_template :free_parking_time
+      end
     end
   end
 
   describe 'POST #calculate_free_parking_time' do
-    let(:params) do
-      {
-        amount: total_amount,
-        watch_movie:  watch_movie
-      }
+    let(:calculate_free_parking_time_service_stub) { double(Exercise6::CalculateFreeParkingTimeService) }
+
+    before do
+      allow(calculate_free_parking_time_service_stub).to receive(:perform).and_return(expected_result)
+      allow(Exercise6::CalculateFreeParkingTimeService).to receive(:new).with(params[:amount], params[:watch_movie])
+        .and_return(calculate_free_parking_time_service_stub)
+      post :calculate_free_parking_time, params: params
     end
 
-    before { post :calculate_free_parking_time, params: params }
-
-    context 'when did not watched movie' do
-      let(:watch_movie) { false }
-
-      context 'when total amount less than 2000' do
-        let(:total_amount) { 1999 }
-
-        it_behaves_like 'exercise 6 controller success response', free_parking_time: 0
+    context 'when service perform successfully' do
+      let(:params) do
+        {
+          amount: "2000",
+          watch_movie: 'true'
+        }
       end
+      let(:expected_result) { OpenStruct.new success?: true, total_free_parking_time: 240, errors: {} }
 
-      context 'when total amount is 2000' do
-        let(:total_amount) { 2000 }
-
-        it_behaves_like 'exercise 6 controller success response', free_parking_time: 60
-      end
-
-      context 'when total amount greater 2000 and less than 5000' do
-        let(:total_amount) { 2001 }
-
-        it_behaves_like 'exercise 6 controller success response', free_parking_time: 60
-      end
-
-      context 'when total amount less than 5000' do
-        let(:total_amount) { 4999 }
-
-        it_behaves_like 'exercise 6 controller success response', free_parking_time: 60
-      end
-
-      context 'when total amount is 5000' do
-        let(:total_amount) { 5000 }
-
-        it_behaves_like 'exercise 6 controller success response', free_parking_time: 120
-      end
-
-      context 'when total amount greater than 5000' do
-        let(:total_amount) { 5001 }
-
-        it_behaves_like 'exercise 6 controller success response', free_parking_time: 120
-      end
+      it_behaves_like 'exercise 6 controller success response', free_parking_time: 240
     end
 
-    context 'when watched movie' do
-      let(:watch_movie) { 'true' }
-
-      context 'when total amount less than 2000' do
-        let(:total_amount) { 1999 }
-
-        it_behaves_like 'exercise 6 controller success response', free_parking_time: 180
+    context 'when service perform failed due to invalid params' do
+      let(:params) do
+        {
+          amount: 'abc',
+          watch_movie: 'true'
+        }
       end
+      let(:expected_result) { OpenStruct.new success?: false, total_free_parking_time: 0, errors: errors }
+      let(:errors) { {amount: :invalid} }
 
-      context 'when total amount is 2000' do
-        let(:total_amount) { 2000 }
-
-        it_behaves_like 'exercise 6 controller success response', free_parking_time: 240
-      end
-
-      context 'when total amount greater 2000 and less than 5000' do
-        let(:total_amount) { 2001 }
-
-        it_behaves_like 'exercise 6 controller success response', free_parking_time: 240
-      end
-
-      context 'when total amount less than 5000' do
-        let(:total_amount) { 4999 }
-
-        it_behaves_like 'exercise 6 controller success response', free_parking_time: 240
-      end
-
-      context 'when total amount is 5000' do
-        let(:total_amount) { 5000 }
-
-        it_behaves_like 'exercise 6 controller success response', free_parking_time: 300
-      end
-
-      context 'when total amount greater than 5000' do
-        let(:total_amount) { 5001 }
-
-        it_behaves_like 'exercise 6 controller success response', free_parking_time: 300
-      end
-    end
-
-    context 'when invalid params' do
-      context 'when amount is not a number' do
-        let(:total_amount) { 'abc' }
-        let(:watch_movie) { 'true' }
-
-        it { expect(assigns(:errors)[:amount]).to eq :invalid }
-      end
-
-      context 'when amount is negative number' do
-        let(:total_amount) { -1 }
-        let(:watch_movie) { 'true' }
-
-        it { expect(assigns(:errors)[:amount]).to eq :invalid }
-      end
+      it { expect(assigns(:errors)[:amount]).to eq :invalid }
     end
   end
 end
