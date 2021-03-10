@@ -2,8 +2,27 @@ require 'rails_helper'
 
 RSpec.describe Exercise3Controller, type: :controller do
   describe '#index' do
+    let(:calculate_service) { double('Exercise3::CalculateService') }
+    let(:action_controller_params) do
+      ActionController::Parameters.new(params).permit(:white_shirt_amount, :tie_amount, other: {})
+    end
+
+    before do
+      allow(Exercise3::CalculateService).to receive(:new).with(action_controller_params).and_return(calculate_service)
+      allow(calculate_service).to receive(:perform).and_return(data_stub)
+
+      get :index, params: params
+    end
+
     shared_examples 'do not applied discount' do |total_price|
-      let(:total_price) { total_price }
+      let(:data_stub) do
+        {
+          errors: {},
+          total_price: total_price,
+          discount_price: 0,
+          discount_percent: 0
+        }
+      end
 
       it do
         expect(assigns(:total_price)).to eq total_price
@@ -13,8 +32,15 @@ RSpec.describe Exercise3Controller, type: :controller do
     end
 
     shared_examples 'applied discount 12 %' do |total_price, discount_price|
-      let(:total_price) { total_price }
-      let(:discount_price) { discount_price }
+      let(:data_stub) do
+        {
+          errors: {},
+          total_price: total_price,
+          discount_price: discount_price,
+          discount_percent: 12
+        }
+      end
+
       it do
         expect(assigns(:total_price)).to eq total_price
         expect(assigns(:discount_percent)).to eq 12
@@ -23,8 +49,15 @@ RSpec.describe Exercise3Controller, type: :controller do
     end
 
     shared_examples 'applied discount 7 %' do |total_price, discount_price|
-      let(:total_price) { total_price }
-      let(:discount_price) { discount_price }
+      let(:data_stub) do
+        {
+          errors: {},
+          total_price: total_price,
+          discount_price: discount_price,
+          discount_percent: 7
+        }
+      end
+
       it do
         expect(assigns(:total_price)).to eq total_price
         expect(assigns(:discount_percent)).to eq 7
@@ -32,16 +65,42 @@ RSpec.describe Exercise3Controller, type: :controller do
       end
     end
 
+    shared_examples 'applied discount 5 %' do |total_price, discount_price|
+      let(:data_stub) do
+        {
+          errors: {},
+          total_price: total_price,
+          discount_price: discount_price,
+          discount_percent: 5
+        }
+      end
+
+      it do
+        expect(assigns(:total_price)).to eq total_price
+        expect(assigns(:discount_percent)).to eq 5
+        expect(assigns(:discount_price)).to eq discount_price
+      end
+    end
+
     shared_examples 'tie_amount invalid' do
       let(:params) do
         {
-          white_shirt_amount: 0,
+          white_shirt_amount: "0",
           tie_amount: tie_amount,
           other: {
-            hat_amount: 0,
+            hat_amount: "0",
           }
         }
       end
+      let(:data_stub) do
+        {
+          errors: { tie_amount: :invalid },
+          total_price: 0,
+          discount_price: 0,
+          discount_percent: 0
+        }
+      end
+
       it { expect(assigns(:errors)[:tie_amount]).to eq :invalid }
     end
 
@@ -49,10 +108,18 @@ RSpec.describe Exercise3Controller, type: :controller do
       let(:params) do
         {
           white_shirt_amount: white_shirt_amount,
-          tie_amount: 0,
+          tie_amount: "0",
           other: {
-            hat_amount: 0,
+            hat_amount: "0",
           }
+        }
+      end
+      let(:data_stub) do
+        {
+          errors: { white_shirt_amount: :invalid },
+          total_price: 0,
+          discount_price: 0,
+          discount_percent: 0
         }
       end
       it { expect(assigns(:errors)[:white_shirt_amount]).to eq :invalid }
@@ -61,21 +128,28 @@ RSpec.describe Exercise3Controller, type: :controller do
     shared_examples 'hat_amount invalid' do
       let(:params) do
         {
-          white_shirt_amount: 0,
-          tie_amount: 0,
+          white_shirt_amount: "0",
+          tie_amount: "0",
           other: {
             hat_amount: hat_amount,
           }
         }
       end
+      let(:data_stub) do
+        {
+          errors: { hat_amount: :invalid },
+          total_price: 0,
+          discount_price: 0,
+          discount_percent: 0
+        }
+      end
+
       it { expect(assigns(:errors)[:hat_amount]).to eq :invalid }
     end
 
-    before { get :index, params: params }
-
     context 'when input data invalid' do
       context 'white_shirt_amount is negative' do
-        let(:white_shirt_amount) { -1 }
+        let(:white_shirt_amount) { "-1" }
 
         it_behaves_like 'white_shirt_amount invalid'
       end
@@ -87,7 +161,7 @@ RSpec.describe Exercise3Controller, type: :controller do
       end
 
       context 'tie_amount is negative' do
-        let(:tie_amount) { -1 }
+        let(:tie_amount) { "-1" }
 
        it_behaves_like 'tie_amount invalid'
       end
@@ -99,7 +173,7 @@ RSpec.describe Exercise3Controller, type: :controller do
       end
 
       context 'hat_amount is negative' do
-        let(:hat_amount) { -1 }
+        let(:hat_amount) { "-1" }
 
         it_behaves_like 'hat_amount invalid'
       end
@@ -116,10 +190,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'with total amount = 7' do
           let(:params) do
             {
-              white_shirt_amount: 3,
-              tie_amount: 4,
+              white_shirt_amount: "3",
+              tie_amount: "4",
               other: {
-                hat_amount: 0,
+                hat_amount: "0",
               }
             }
           end
@@ -130,10 +204,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'total amount > 7' do
           let(:params) do
             {
-              white_shirt_amount: 4,
-              tie_amount: 4,
+              white_shirt_amount: "4",
+              tie_amount: "4",
               other: {
-                hat_amount: 0,
+                hat_amount: "0",
               }
             }
           end
@@ -144,19 +218,15 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'total amount < 7' do
           let(:params) do
             {
-              white_shirt_amount: 3,
-              tie_amount: 2,
+              white_shirt_amount: "3",
+              tie_amount: "2",
               other: {
-                hat_amount: 0,
+                hat_amount: "0",
               }
             }
           end
 
-          it 'return total price with discount is 5 %' do
-            expect(assigns(:discount_percent)).to eq 5
-            expect(assigns(:discount_price)).to eq 37_000.0
-            expect(assigns(:total_price)).to eq 703_000.0
-          end
+          it_behaves_like 'applied discount 5 %', 703_000.0, 37_000.0
         end
       end
 
@@ -164,10 +234,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'with total amount = 7' do
           let(:params) do
             {
-              white_shirt_amount: 3,
-              tie_amount: 0,
+              white_shirt_amount: "3",
+              tie_amount: "0",
               other: {
-                hat_amount: 4,
+                hat_amount: "4",
               }
             }
           end
@@ -178,10 +248,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'with total amount > 7' do
           let(:params) do
             {
-              white_shirt_amount: 3,
-              tie_amount: 0,
+              white_shirt_amount: "3",
+              tie_amount: "0",
               other: {
-                hat_amount: 5,
+                hat_amount: "5",
               }
             }
           end
@@ -192,10 +262,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'with total amount < 7' do
           let(:params) do
             {
-              white_shirt_amount: 3,
-              tie_amount: 0,
+              white_shirt_amount: "3",
+              tie_amount: "0",
               other: {
-                hat_amount: 2,
+                hat_amount: "2",
               }
             }
           end
@@ -208,10 +278,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'with total amount = 7' do
           let(:params) do
             {
-              white_shirt_amount: 0,
-              tie_amount: 3,
+              white_shirt_amount: "0",
+              tie_amount: "3",
               other: {
-                hat_amount: 4,
+                hat_amount: "4",
               }
             }
           end
@@ -222,10 +292,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'with total amount > 7' do
           let(:params) do
             {
-              white_shirt_amount: 0,
-              tie_amount: 4,
+              white_shirt_amount: "0",
+              tie_amount: "4",
               other: {
-                hat_amount: 4,
+                hat_amount: "4",
               }
             }
           end
@@ -236,10 +306,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'with total amount < 7' do
           let(:params) do
             {
-              white_shirt_amount: 0,
-              tie_amount: 2,
+              white_shirt_amount: "0",
+              tie_amount: "2",
               other: {
-                hat_amount: 1,
+                hat_amount: "1",
               }
             }
           end
@@ -252,10 +322,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'with total amount = 7' do
           let(:params) do
             {
-              white_shirt_amount: 7,
-              tie_amount: 0,
+              white_shirt_amount: "7",
+              tie_amount: "0",
               other: {
-                hat_amount: 0,
+                hat_amount: "0",
               }
             }
           end
@@ -266,10 +336,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'with total amount > 7' do
           let(:params) do
             {
-              white_shirt_amount: 8,
-              tie_amount: 0,
+              white_shirt_amount: "8",
+              tie_amount: "0",
               other: {
-                hat_amount: 0,
+                hat_amount: "0",
               }
             }
           end
@@ -280,10 +350,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'total amount < 7' do
           let(:params) do
             {
-              white_shirt_amount: 3,
-              tie_amount: 0,
+              white_shirt_amount: "3",
+              tie_amount: "0",
               other: {
-                hat_amount: 0,
+                hat_amount: "0",
               }
             }
           end
@@ -296,10 +366,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'with total amount = 7' do
           let(:params) do
             {
-              white_shirt_amount: 0,
-              tie_amount: 7,
+              white_shirt_amount: "0",
+              tie_amount: "7",
               other: {
-                hat_amount: 0,
+                hat_amount: "0",
               }
             }
           end
@@ -310,10 +380,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'total amount > 7' do
           let(:params) do
             {
-              white_shirt_amount: 0,
-              tie_amount: 8,
+              white_shirt_amount: "0",
+              tie_amount: "8",
               other: {
-                hat_amount: 0,
+                hat_amount: "0",
               }
             }
           end
@@ -324,10 +394,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'with total amount < 7' do
           let(:params) do
             {
-              white_shirt_amount: 0,
-              tie_amount: 3,
+              white_shirt_amount: "0",
+              tie_amount: "3",
               other: {
-                hat_amount: 0,
+                hat_amount: "0",
               }
             }
           end
@@ -340,10 +410,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'with total amount = 7' do
           let(:params) do
             {
-              white_shirt_amount: 0,
-              tie_amount: 0,
+              white_shirt_amount: "0",
+              tie_amount: "0",
               other: {
-                hat_amount: 7,
+                hat_amount: "7",
               }
             }
           end
@@ -354,10 +424,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'with total amount > 7' do
           let(:params) do
             {
-              white_shirt_amount: 0,
-              tie_amount: 0,
+              white_shirt_amount: "0",
+              tie_amount: "0",
               other: {
-                hat_amount: 8,
+                hat_amount: "8",
               }
             }
           end
@@ -368,10 +438,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'with total amount < 7' do
           let(:params) do
             {
-              white_shirt_amount: 0,
-              tie_amount: 0,
+              white_shirt_amount: "0",
+              tie_amount: "0",
               other: {
-                hat_amount: 5,
+                hat_amount: "5",
               }
             }
           end
@@ -384,10 +454,10 @@ RSpec.describe Exercise3Controller, type: :controller do
         context 'all input is 0' do
           let(:params) do
             {
-              white_shirt_amount: 0,
-              tie_amount: 0,
+              white_shirt_amount: "0",
+              tie_amount: "0",
               other: {
-                hat_amount: 0,
+                hat_amount: "0",
               }
             }
           end
@@ -414,7 +484,6 @@ RSpec.describe Exercise3Controller, type: :controller do
             {
               white_shirt_amount: "",
               tie_amount: "",
-              other: {},
             }
           end
 

@@ -6,11 +6,6 @@ shared_examples 'Ex8 expect ticket_booking_day' do |price_args|
     }
   end
 
-  before do
-    allow(Exercise8::CalculateTicketPriceService).to receive(:new).with(params).and_return(service_stub)
-    allow(service_stub).to receive(:perform).and_return(data_stub)
-  end
-
   context 'ticket_booking_day is Tuesday' do
     # mock ticket_booking_day is Tuesday
     let(:ticket_booking_day) { Time.now.next_occurring(:tuesday) }
